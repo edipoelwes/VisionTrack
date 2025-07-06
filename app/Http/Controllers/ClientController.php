@@ -15,10 +15,8 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = ClientResource::collection(Client::query()->paginate(5));
-
         return Inertia::render('Client', [
-            'clients' => $clients,
+            'clients' => ClientResource::collection(Client::query()->paginate(5)),
         ]);
     }
 
