@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
+use App\Http\Resources\ClientResource;
 use App\Models\Client;
 use Inertia\Inertia;
 
@@ -14,7 +15,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::query()->paginate(5);
+        $clients = ClientResource::collection(Client::query()->paginate(5));
 
         return Inertia::render('Client', [
             'clients' => $clients,
