@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { SunIcon, MoonIcon } from '@heroicons/vue/24/solid'
 
 const isDark = ref(false)
 
@@ -31,7 +32,14 @@ function updateTheme() {
     <button
         @click="toggleTheme"
         class="text-sm px-3 py-2 rounded bg-gray-200 dark:bg-gray-700 dark:text-white"
+        title="Toggle theme"
     >
-        {{ isDark ? 'Light Mode' : 'Dark Mode' }}
+        <component
+            :is="isDark ? SunIcon : MoonIcon"
+            :class="[
+                'w-5 h-5 transition-colors',
+                isDark ? 'text-yellow-400' : 'text-blue-600'
+              ]"
+        />
     </button>
 </template>
