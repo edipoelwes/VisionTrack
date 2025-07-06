@@ -199,6 +199,10 @@ const logout = () => {
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </ResponsiveNavLink>
+
+                        <ResponsiveNavLink :href="route('client')" :active="route().current('client')">
+                            Clientes
+                        </ResponsiveNavLink>
                     </div>
 
                     <!-- Responsive Settings Options -->
