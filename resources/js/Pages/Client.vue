@@ -2,7 +2,8 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 
 import {ref, watch} from "vue";
-import { router } from '@inertiajs/vue3'
+import { router } from '@inertiajs/vue3';
+import debounce from 'lodash/debounce';
 
 import {
     EllipsisVerticalIcon,
@@ -31,11 +32,7 @@ function deleteUser(user) {
     }
 }
 
-watch(selectedPerPage, (value) => {
-    router.get(route('clients.index'), { per_page: value }, { preserveState: true })
-})
-
-watch(search, (value) => {
+const applySearch = debounce((value) => {
     router.get(route('clients.index'), {
         search: value,
         per_page: selectedPerPage.value,
@@ -43,7 +40,13 @@ watch(search, (value) => {
         preserveState: true,
         replace: true,
     })
+}, 500)
+
+watch(selectedPerPage, (value) => {
+    router.get(route('clients.index'), { per_page: value }, { preserveState: true })
 })
+
+watch(search, (value) => applySearch(value))
 </script>
 
 <template>
