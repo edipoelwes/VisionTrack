@@ -17,6 +17,13 @@ class ClientController extends Controller
     {
         $perPage = request()->input('per_page', 10);
         $clients = Client::query()
+            ->when(request()->input('search'), function ($query, $search) {
+                $sanitizedSearch = preg_replace('/\D/', '', $search);
+                $query->where(function ($q) use ($search, $sanitizedSearch) {
+                    $q->where('name', 'like', "%{$search}%")
+                        ->orWhereRaw("REPLACE(REPLACE(REPLACE(cpf, '.', ''), '-', ''), ' ', '') LIKE ?", ["%{$sanitizedSearch}%"]);
+                });
+            })
             ->orderBy('name')
             ->paginate($perPage)
             ->withQueryString();
