@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
-use App\Http\Resources\ClientResource;
 use App\Models\Client;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -17,8 +16,13 @@ class ClientController extends Controller
     public function index(): Response
     {
         $perPage = request()->input('per_page', 10);
+        $clients = Client::query()
+            ->orderBy('name')
+            ->paginate($perPage)
+            ->withQueryString();
+
         return Inertia::render('Client', [
-            'clients' => ClientResource::collection(Client::query()->paginate($perPage)->withQueryString()),
+            'clients' => $clients,
             'perPage' => (int) $perPage,
         ]);
     }
