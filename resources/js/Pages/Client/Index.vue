@@ -2,13 +2,14 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 
 import {ref, watch} from "vue";
-import { router } from '@inertiajs/vue3';
+import {Link, router} from '@inertiajs/vue3';
 import debounce from 'lodash/debounce';
 
 import {
     EllipsisVerticalIcon,
     PencilSquareIcon,
     TrashIcon,
+    EyeIcon
 } from '@heroicons/vue/24/solid'
 import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/vue'
 import SelectInput from "@/Components/SelectInput.vue";
@@ -31,6 +32,8 @@ function deleteUser(user) {
         alert(`Deleted ${user.name}`)
     }
 }
+
+const detailsUser = (user) => router.get(route('clients.show', { client: user.id }), {}, { preserveState: true })
 
 const applySearch = debounce((value) => {
     router.get(route('clients.index'), {
@@ -86,7 +89,9 @@ watch(search, (value) => applySearch(value))
                                     class="hover:bg-gray-50 dark:hover:bg-gray-700"
                                 >
                                     <td class="px-6 py-4 text-gray-800 dark:text-gray-100 whitespace-nowrap">
-                                        {{ client.name }}
+                                        <Link :href="route('clients.show', { client: client.id })">
+                                            {{ client.name }}
+                                        </Link>
                                     </td>
                                     <td class="px-6 py-4 text-gray-600 dark:text-gray-300 whitespace-nowrap">
                                         {{ client.cpf }}
@@ -109,6 +114,20 @@ watch(search, (value) => applySearch(value))
                                             <MenuItems
                                                 class="absolute right-0 z-10 mt-2 w-36 origin-top-right rounded-md bg-white dark:bg-gray-700 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                             >
+                                                <MenuItem v-slot="{ active }">
+                                                    <button
+                                                        @click="detailsUser(client)"
+                                                        :class="[
+                                                            'group flex items-center w-full px-4 py-2 text-sm',
+                                                            active
+                                                              ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-600 dark:text-white'
+                                                              : 'text-gray-700 dark:text-gray-200',
+                                                          ]"
+                                                    >
+                                                        <EyeIcon class="w-4 h-4 mr-2" />
+                                                        Detalhes
+                                                    </button>
+                                                </MenuItem>
                                                 <MenuItem v-slot="{ active }">
                                                     <button
                                                         @click="editUser(client)"

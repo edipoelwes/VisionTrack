@@ -28,7 +28,7 @@ class ClientController extends Controller
             ->paginate($perPage)
             ->withQueryString();
 
-        return Inertia::render('Client', [
+        return Inertia::render('Client/Index', [
             'clients' => $clients,
             'perPage' => (int) $perPage,
         ]);
@@ -55,7 +55,7 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        //
+        dd($client);
     }
 
     /**
