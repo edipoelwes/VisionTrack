@@ -10,6 +10,8 @@ import {
     TrashIcon,
 } from '@heroicons/vue/24/solid'
 import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/vue'
+import SelectInput from "@/Components/SelectInput.vue";
+import Pagination from "@/Components/Pagination.vue";
 
 const props = defineProps({
     clients: Object,
@@ -44,17 +46,7 @@ watch(selectedPerPage, (value) => {
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
-                    <div class="p-6">
-                        <select
-                            v-model="selectedPerPage"
-                            class="border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded px-2 py-1 text-sm"
-                        >
-                            <option :value="5">5 per page</option>
-                            <option :value="10">10 per page</option>
-                            <option :value="25">25 per page</option>
-                            <option :value="50">50 per page</option>
-                            <option :value="100">100 per page</option>
-                        </select>
+                    <div class="p-5">
                         <div class="overflow-x-auto border border-gray-200 dark:border-gray-700 rounded shadow bg-white dark:bg-gray-800">
                             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                                 <thead class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 uppercase text-xs">
@@ -130,6 +122,21 @@ watch(selectedPerPage, (value) => {
                                 </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="mt-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                            <SelectInput
+                                v-model="selectedPerPage"
+                                :options="[
+                                { value: 2, label: '2' },
+                                { value: 5, label: '5' },
+                                { value: 10, label: '10' },
+                                { value: 15, label: '15' },
+                                { value: 20, label: '20' },
+                                { value: 25, label: '25' },
+                            ]"
+                                class="w-full md:w-auto"
+                            />
+                            <Pagination :links="clients.links" />
                         </div>
                     </div>
                 </div>
