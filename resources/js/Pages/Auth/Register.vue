@@ -8,11 +8,18 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import SelectInput from '@/Components/SelectInput.vue';
+import {computed} from "vue";
 
-const options = [
-    { value: 1, label: 'Fotótica Macêdo' },
-    { value: 2, label: 'Ótica Silvia' },
-];
+const props = defineProps({
+    companies: Array,
+});
+
+const companyOptions = computed(() =>
+    props.companies.map(company => ({
+        value: company.id,
+        label: `${company.name} (${company.cnpj})`,
+    }))
+)
 
 const form = useForm({
     name: '',
@@ -71,7 +78,8 @@ const submit = () => {
                 <SelectInput
                     id="company_id"
                     v-model="form.company_id"
-                    :options="options" autofocus
+                    :options="companyOptions"
+                    autofocus
                     type="company_id"
                     class="mt-1 block w-full"
                     required
