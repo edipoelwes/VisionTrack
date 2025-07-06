@@ -16,8 +16,10 @@ class ClientController extends Controller
      */
     public function index(): Response
     {
+        $perPage = request()->input('per_page', 10);
         return Inertia::render('Client', [
-            'clients' => ClientResource::collection(Client::query()->paginate()),
+            'clients' => ClientResource::collection(Client::query()->paginate($perPage)->withQueryString()),
+            'perPage' => (int) $perPage,
         ]);
     }
 
