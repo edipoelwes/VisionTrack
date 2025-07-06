@@ -17,7 +17,6 @@ defineProps({
                 class="flex items-center gap-1 text-sm px-3 py-1 rounded border transition
                border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700
                text-gray-800 dark:text-gray-200"
-                @click="scrollToTop"
             >
                 <ArrowLeftIcon class="w-4 h-4" />
                 Previous
@@ -33,12 +32,11 @@ defineProps({
                     v-html="link.label"
                     class="px-3 py-1 text-sm border rounded transition"
                     :class="{
-            'bg-indigo-600 text-white border-indigo-600': link.active,
-            'text-gray-500 dark:text-gray-300': !link.active && !link.url,
-            'hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-600':
-              link.url && !link.active,
-          }"
-                    @click="scrollToTop"
+                        'bg-indigo-600 text-white border-indigo-600': link.active,
+                        'text-gray-500 dark:text-gray-300': !link.active && !link.url,
+                        'hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-600':
+                          link.url && !link.active,
+                      }"
                 />
             </template>
         </div>
@@ -51,7 +49,6 @@ defineProps({
                 class="flex items-center gap-1 text-sm px-3 py-1 rounded border transition
                border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700
                text-gray-800 dark:text-gray-200"
-                @click="scrollToTop"
             >
                 Next
                 <ArrowRightIcon class="w-4 h-4" />
@@ -59,16 +56,3 @@ defineProps({
         </div>
     </div>
 </template>
-
-<script>
-export default {
-    methods: {
-        scrollToTop() {
-            nextTick(() => {
-                const el = document.getElementById('user-table-top')
-                if (el) el.scrollIntoView({ behavior: 'smooth' })
-            })
-        },
-    },
-}
-</script>
