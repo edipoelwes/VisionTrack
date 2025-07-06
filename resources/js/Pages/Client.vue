@@ -1,6 +1,9 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 
+import {ref, watch} from "vue";
+import { router } from '@inertiajs/vue3'
+
 import {
     EllipsisVerticalIcon,
     PencilSquareIcon,
@@ -8,7 +11,12 @@ import {
 } from '@heroicons/vue/24/solid'
 import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/vue'
 
-defineProps({ clients: Object })
+const props = defineProps({
+    clients: Object,
+    perPage: Number,
+})
+
+const selectedPerPage = ref(props.perPage)
 
 function editUser(user) {
     alert(`Editing ${user.name}`)
@@ -19,6 +27,10 @@ function deleteUser(user) {
         alert(`Deleted ${user.name}`)
     }
 }
+
+watch(selectedPerPage, (value) => {
+    router.get(route('clients.index'), { per_page: value }, { preserveState: true })
+})
 </script>
 
 <template>
@@ -33,6 +45,16 @@ function deleteUser(user) {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
                     <div class="p-6">
+                        <select
+                            v-model="selectedPerPage"
+                            class="border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded px-2 py-1 text-sm"
+                        >
+                            <option :value="5">5 per page</option>
+                            <option :value="10">10 per page</option>
+                            <option :value="25">25 per page</option>
+                            <option :value="50">50 per page</option>
+                            <option :value="100">100 per page</option>
+                        </select>
                         <div class="overflow-x-auto border border-gray-200 dark:border-gray-700 rounded shadow bg-white dark:bg-gray-800">
                             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                                 <thead class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 uppercase text-xs">
