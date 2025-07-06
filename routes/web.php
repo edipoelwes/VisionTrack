@@ -22,7 +22,5 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-    Route::get('/client', function () {
-        return Inertia::render('Client');
-    })->name('client');
+    Route::get('/client', [\App\Http\Controllers\ClientController::class, 'index'])->name('client');
 });
