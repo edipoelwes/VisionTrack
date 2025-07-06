@@ -18,6 +18,7 @@ const props = defineProps({
     perPage: Number,
 })
 
+const search = ref(props.clients.meta?.search || '')
 const selectedPerPage = ref(props.perPage)
 
 function editUser(user) {
@@ -33,6 +34,16 @@ function deleteUser(user) {
 watch(selectedPerPage, (value) => {
     router.get(route('clients.index'), { per_page: value }, { preserveState: true })
 })
+
+watch(search, (value) => {
+    router.get(route('clients.index'), {
+        search: value,
+        per_page: selectedPerPage.value,
+    }, {
+        preserveState: true,
+        replace: true,
+    })
+})
 </script>
 
 <template>
@@ -47,6 +58,14 @@ watch(selectedPerPage, (value) => {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
                     <div class="p-5">
+                        <div class="mb-4">
+                            <input
+                                v-model="search"
+                                type="text"
+                                placeholder="Buscar por nome ou CPF"
+                                class="w-full md:w-1/3 rounded border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:ring focus:ring-indigo-300 text-sm px-3 py-2"
+                            />
+                        </div>
                         <div class="overflow-x-auto border border-gray-200 dark:border-gray-700 rounded shadow bg-white dark:bg-gray-800">
                             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                                 <thead class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 uppercase text-xs">
