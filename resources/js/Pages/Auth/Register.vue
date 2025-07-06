@@ -7,11 +7,18 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import SelectInput from '@/Components/SelectInput.vue';
+
+const options = [
+    { value: 1, label: 'Fotótica Macêdo' },
+    { value: 2, label: 'Ótica Silvia' },
+];
 
 const form = useForm({
     name: '',
     email: '',
     password: '',
+    company_id: 1,
     password_confirmation: '',
     terms: false,
 });
@@ -57,6 +64,19 @@ const submit = () => {
                     autocomplete="username"
                 />
                 <InputError class="mt-2" :message="form.errors.email" />
+            </div>
+
+            <div class="mt-4">
+                <InputLabel for="company_id" value="Company" />
+                <SelectInput
+                    id="company_id"
+                    v-model="form.company_id"
+                    :options="options" autofocus
+                    type="company_id"
+                    class="mt-1 block w-full"
+                    required
+                />
+                <InputError class="mt-2" :message="form.errors.company_id" />
             </div>
 
             <div class="mt-4">
