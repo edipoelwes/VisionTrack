@@ -69,24 +69,47 @@ const props = defineProps({
 
                         <!-- Painel de PDFs (80%) -->
                         <div class="md:col-span-3">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                                <a
-                                    v-for="prescription in prescriptions"
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                                <div
+                                    v-for="(prescription) in prescriptions"
                                     :key="prescription.id"
-                                    :href="`/storage/${prescription.image_path}`"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="flex flex-col items-center p-4 bg-gray-50 dark:bg-gray-700 rounded hover:shadow-md cursor-pointer transition"
+                                    class="relative flex flex-col items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:shadow-lg cursor-pointer transition group"
                                 >
-                                    <Tooltip :content="prescription.notes">
-                                        <DocumentIcon class="w-10 h-10 text-red-600 dark:text-red-400 mb-2" />
-                                        <p class="text-xs text-center text-gray-700 dark:text-gray-200 truncate w-full">
+                                    <!-- Botão remover -->
+                                    <button
+                                        @click.prevent="$emit('remove', prescription.id)"
+                                        class="absolute top-1 right-1 text-gray-400 hover:text-red-500 dark:hover:text-red-400 focus:outline-none"
+                                        aria-label="Remover receita"
+                                        title="Remover receita"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                                        </svg>
+                                    </button>
+
+                                    <a
+                                        :href="`/storage/${prescription.image_path}`"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="flex flex-col items-center w-full"
+                                        @click.stop
+                                    >
+                                        <Tooltip :content="prescription.notes">
+                                            <DocumentIcon class="w-14 h-14 text-red-600 dark:text-red-400 mb-1" />
+                                        </Tooltip>
+                                        <p
+                                            class="text-xs text-center text-gray-700 dark:text-gray-200 truncate w-full"
+                                            :title="prescription.issued_at"
+                                        >
                                             {{ prescription.issued_at }}
                                         </p>
-                                    </Tooltip>
-                                </a>
+                                    </a>
+                                </div>
 
-                                <div v-if="!prescriptions || prescriptions.length === 0" class="col-span-full text-gray-500 dark:text-gray-400 text-center">
+                                <div
+                                    v-if="!prescriptions || prescriptions.length === 0"
+                                    class="col-span-full text-gray-500 dark:text-gray-400 text-center py-8"
+                                >
                                     Nenhum documento encontrado.
                                 </div>
                             </div>
