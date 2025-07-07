@@ -18,4 +18,9 @@ class Client extends Model
     {
         return $this->belongsToMany(Company::class);
     }
+
+    public function prescriptions(): HasMany
+    {
+        return $this->hasMany(Prescription::class);
+    }
 }
