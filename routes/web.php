@@ -24,4 +24,6 @@ Route::middleware([
     })->name('dashboard');
 
     Route::resource('/clients', ClientController::class);
+    Route::post('/clients/{client}/prescriptions', \App\Http\Controllers\ClientPrescriptionStoreController::class)
+        ->name('clients.prescriptions.store');
 });
