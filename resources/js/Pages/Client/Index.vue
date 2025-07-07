@@ -12,6 +12,7 @@ import {
     EyeIcon
 } from '@heroicons/vue/24/solid'
 import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/vue'
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 import Pagination from "@/Components/Pagination.vue";
 
@@ -64,13 +65,15 @@ watch(search, (value) => applySearch(value))
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
                     <div class="p-5">
-                        <div class="mb-4">
+                        <div class="mb-4 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
                             <input
                                 v-model="search"
                                 type="text"
                                 placeholder="Buscar por nome ou CPF"
                                 class="w-full md:w-1/3 rounded border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:ring focus:ring-indigo-300 text-sm px-3 py-2"
                             />
+
+                            <PrimaryButton :href="route('clients.create')" type="button">Novo Cliente</PrimaryButton>
                         </div>
                         <div class="overflow-x-auto border border-gray-200 dark:border-gray-700 rounded shadow bg-white dark:bg-gray-800">
                             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
