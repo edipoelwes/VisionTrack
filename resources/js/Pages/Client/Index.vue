@@ -1,5 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
+import Modal from '@/Components/Modal.vue';
+import AddPrescriptionForm from './Partials/AddPrescriptionForm.vue';
 
 import {ref, watch} from "vue";
 import {Link, router} from '@inertiajs/vue3';
@@ -23,6 +25,19 @@ const props = defineProps({
 
 const search = ref(props.clients.meta?.search || '')
 const selectedPerPage = ref(props.perPage)
+
+const showPrescriptionModal = ref(false)
+const selectedClientId = ref(null)
+
+function openPrescriptionModal(client) {
+    selectedClientId.value = client.id
+    showPrescriptionModal.value = true
+}
+
+function closePrescriptionModal() {
+    showPrescriptionModal.value = false
+    selectedClientId.value = null
+}
 
 function editUser(user) {
     alert(`Editing ${user.name}`)
@@ -133,6 +148,20 @@ watch(search, (value) => applySearch(value))
                                                 </MenuItem>
                                                 <MenuItem v-slot="{ active }">
                                                     <button
+                                                        @click="openPrescriptionModal(client)"
+                                                        :class="[
+                                                            'group flex items-center w-full px-4 py-2 text-sm',
+                                                            active
+                                                              ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-600 dark:text-white'
+                                                              : 'text-gray-700 dark:text-gray-200',
+                                                          ]"
+                                                    >
+                                                        <EyeIcon class="w-4 h-4 mr-2" />
+                                                        Nova Receita
+                                                    </button>
+                                                </MenuItem>
+                                                <MenuItem v-slot="{ active }">
+                                                    <button
                                                         @click="editUser(client)"
                                                         :class="[
                                                             'group flex items-center w-full px-4 py-2 text-sm',
@@ -186,4 +215,7 @@ watch(search, (value) => applySearch(value))
             </div>
         </div>
     </AppLayout>
+    <Modal :show="showPrescriptionModal" max-width="2xl" @close="closePrescriptionModal">
+        <AddPrescriptionForm :client-id="selectedClientId" @submitted="closePrescriptionModal" @close="closePrescriptionModal"/>
+    </Modal>
 </template>
