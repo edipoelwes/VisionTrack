@@ -6,6 +6,7 @@ use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
 use App\Models\Client;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -114,8 +115,19 @@ class ClientController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Client $client)
+    public function destroy(Client $client): RedirectResponse
     {
-        //
+        foreach ($client->prescriptions as $prescription) {
+            if ($prescription->image_path && Storage::disk('public')->exists($prescription->image_path)) {
+                Storage::disk('public')->delete($prescription->image_path);
+            }
+        }
+
+        $client->addresses()->delete();
+        $client->prescriptions()->delete();
+
+        $client->delete();
+
+        return redirect()->route('clients.index')->with('success', 'Cliente deletado com sucesso.');
     }
 }
