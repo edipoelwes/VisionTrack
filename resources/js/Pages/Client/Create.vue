@@ -12,8 +12,11 @@ const form = useForm({
     email: '',
     addresses: [
         {
-            type: '',
+            type: 'residential',
             street: '',
+            number: '',
+            complement: '',
+            neighborhood: '',
             city: '',
             state: '',
             zip: '',
@@ -24,8 +27,11 @@ const form = useForm({
 
 function addAddress() {
     form.addresses.push({
-        type: '',
+        type: 'residential',
         street: '',
+        number: '',
+        complement: '',
+        neighborhood: '',
         city: '',
         state: '',
         zip: '',
@@ -93,20 +99,112 @@ function submit() {
                     <!-- Endereços -->
                     <div>
                         <h3 class="text-lg font-bold mb-4 text-gray-800 dark:text-gray-100">Endereços</h3>
-                        <div v-for="(address, index) in form.addresses" :key="index" class="p-4 mb-4 border rounded dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
+                        <div
+                            v-for="(address, index) in form.addresses"
+                            :key="index"
+                            class="p-4 mb-4 border rounded dark:border-gray-700 bg-gray-50 dark:bg-gray-900"
+                        >
                             <div class="flex justify-between items-center mb-2">
                                 <h4 class="font-semibold text-sm text-gray-700 dark:text-gray-300">Endereço {{ index + 1 }}</h4>
-                                <button type="button" @click="removeAddress(index)" class="text-red-600 dark:text-red-400 hover:underline text-sm">Remover</button>
+                                <button type="button" @click="removeAddress(index)" class="text-red-600 dark:text-red-400 hover:underline text-sm">
+                                    Remover
+                                </button>
                             </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <input v-model="address.type" placeholder="Tipo (ex: Casa, Trabalho)" class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white px-3 py-2" />
-                                <input v-model="address.street" placeholder="Rua" class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white px-3 py-2" />
-                                <input v-model="address.city" placeholder="Cidade" class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white px-3 py-2" />
-                                <input v-model="address.state" placeholder="Estado" class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white px-3 py-2" />
-                                <input v-model="address.zip" placeholder="CEP" class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white px-3 py-2" />
+
+                            <div class="grid grid-cols-1 md:grid-cols-6 gap-4">
+                                <!-- Tipo -->
+                                <div class="md:col-span-2">
+                                    <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">Tipo</label>
+                                    <select
+                                        v-model="address.type"
+                                        class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white px-3 py-2"
+                                    >
+                                        <option value="residential">Residencial</option>
+                                        <option value="commercial">Comercial</option>
+                                    </select>
+                                </div>
+
+                                <!-- Rua -->
+                                <div class="md:col-span-4">
+                                    <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">Rua</label>
+                                    <input
+                                        v-model="address.street"
+                                        placeholder="Rua"
+                                        class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white px-3 py-2"
+                                    />
+                                </div>
+
+                                <!-- Número -->
+                                <div class="md:col-span-2">
+                                    <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">Número</label>
+                                    <input
+                                        v-model="address.number"
+                                        placeholder="Número"
+                                        class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white px-3 py-2"
+                                    />
+                                </div>
+
+                                <!-- Complemento -->
+                                <div class="md:col-span-4">
+                                    <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">Complemento</label>
+                                    <input
+                                        v-model="address.complement"
+                                        placeholder="Complemento"
+                                        class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white px-3 py-2"
+                                    />
+                                </div>
+
+                                <!-- Bairro -->
+                                <div class="md:col-span-3">
+                                    <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">Bairro</label>
+                                    <input
+                                        v-model="address.neighborhood"
+                                        placeholder="Bairro"
+                                        class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white px-3 py-2"
+                                    />
+                                </div>
+
+                                <!-- Cidade -->
+                                <div class="md:col-span-3">
+                                    <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">Cidade</label>
+                                    <input
+                                        v-model="address.city"
+                                        placeholder="Cidade"
+                                        class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white px-3 py-2"
+                                    />
+                                </div>
+
+                                <!-- Estado -->
+                                <div class="md:col-span-2">
+                                    <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">Estado</label>
+                                    <input
+                                        v-model="address.state"
+                                        placeholder="UF"
+                                        maxlength="2"
+                                        class="w-full uppercase rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white px-3 py-2"
+                                    />
+                                </div>
+
+                                <!-- CEP -->
+                                <div class="md:col-span-4">
+                                    <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">CEP</label>
+                                    <input
+                                        v-model="address.zip_code"
+                                        placeholder="CEP"
+                                        v-mask="'#####-###'"
+                                        class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white px-3 py-2"
+                                    />
+                                </div>
                             </div>
                         </div>
-                        <button type="button" @click="addAddress" class="text-indigo-600 dark:text-indigo-400 hover:underline text-sm">+ Adicionar Endereço</button>
+
+                        <button
+                            type="button"
+                            @click="addAddress"
+                            class="text-indigo-600 dark:text-indigo-400 hover:underline text-sm"
+                        >
+                            + Adicionar Endereço
+                        </button>
                     </div>
 
                     <!-- Receitas -->
