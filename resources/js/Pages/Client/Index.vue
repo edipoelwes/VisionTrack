@@ -8,6 +8,7 @@ import {Link, router} from '@inertiajs/vue3';
 import debounce from 'lodash/debounce';
 
 import {
+    ClipboardDocumentIcon,
     EllipsisVerticalIcon,
     PencilSquareIcon,
     TrashIcon,
@@ -156,7 +157,7 @@ watch(search, (value) => applySearch(value))
                                                               : 'text-gray-700 dark:text-gray-200',
                                                           ]"
                                                     >
-                                                        <EyeIcon class="w-4 h-4 mr-2" />
+                                                        <ClipboardDocumentIcon class="w-4 h-4 mr-2" />
                                                         Nova Receita
                                                     </button>
                                                 </MenuItem>
