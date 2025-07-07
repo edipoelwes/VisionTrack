@@ -56,11 +56,11 @@ const props = defineProps({
                                         >
                                             <span class="block font-medium text-gray-800 dark:text-gray-100">{{ address.type }}</span>
                                             <span class="text-gray-600 dark:text-gray-300">
-                        {{ address.street }}, {{ address.number }}
-                        <span v-if="address.complement"> - {{ address.complement }}</span>,
-                        {{ address.neighborhood }}, {{ address.city }} - {{ address.state }}<br>
-                        {{ address.zip_code }}
-                    </span>
+                                                {{ address.street }}, {{ address.number }}
+                                                <span v-if="address.complement"> - {{ address.complement }}</span>,
+                                                {{ address.neighborhood }}, {{ address.city }} - {{ address.state }}<br>
+                                                {{ address.zip_code }}
+                                            </span>
                                         </li>
                                     </ul>
                                 </div>
