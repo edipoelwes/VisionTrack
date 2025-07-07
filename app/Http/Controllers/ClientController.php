@@ -19,8 +19,9 @@ class ClientController extends Controller
         $clients = Client::query()
             ->when(request()->input('search'), function ($query, $search) {
                 $sanitizedSearch = preg_replace('/\D/', '', $search);
-                $query->where(function ($q) use ($search, $sanitizedSearch) {
-                    $q->where('name', 'like', "%{$search}%")
+                $lowerSearch = strtolower($search);
+                $query->where(function ($q) use ($lowerSearch, $sanitizedSearch) {
+                    $q->whereRaw('LOWER(name) LIKE ?', ["%{$lowerSearch}%"])
                         ->orWhereRaw("REPLACE(REPLACE(REPLACE(cpf, '.', ''), '-', ''), ' ', '') LIKE ?", ["%{$sanitizedSearch}%"]);
                 });
             })
