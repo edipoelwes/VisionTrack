@@ -28,9 +28,9 @@ function editUser(user) {
     alert(`Editing ${user.name}`)
 }
 
-function deleteUser(user) {
-    if (confirm(`Delete ${user.name}?`)) {
-        alert(`Deleted ${user.name}`)
+function deleteClient(client) {
+    if (confirm('Tem certeza que deseja deletar este cliente?')) {
+        router.delete(route('clients.destroy', client.id))
     }
 }
 
@@ -148,7 +148,7 @@ watch(search, (value) => applySearch(value))
 
                                                 <MenuItem v-slot="{ active }">
                                                     <button
-                                                        @click="deleteUser(client)"
+                                                        @click="deleteClient(client)"
                                                         :class="[
                                                             'group flex items-center w-full px-4 py-2 text-sm',
                                                             active
