@@ -21,6 +21,6 @@ class Client extends Model
 
     public function prescriptions(): HasMany
     {
-        return $this->hasMany(Prescription::class);
+        return $this->hasMany(Prescription::class)->orderByDesc('issued_at');
     }
 }
