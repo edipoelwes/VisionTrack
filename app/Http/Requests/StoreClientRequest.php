@@ -22,10 +22,33 @@ class StoreClientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'cpf' => 'required|string|max:14|unique:clients,cpf',
-            'phone' => 'nullable|string|max:20',
-            'email' => 'nullable|email|max:255',
+            'name' => ['required', 'string', 'max:255'],
+            'cpf' => ['required', 'string', 'regex:/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/', 'max:14', 'unique:clients,cpf'],
+            'phone' => ['nullable', 'string'],
+            'email' => ['nullable', 'email'],
+
+            'addresses' => ['required', 'array', 'min:1'],
+            'addresses.*.type' => ['required', 'in:residential,commercial'],
+            'addresses.*.street' => ['required', 'string'],
+            'addresses.*.number' => ['required', 'string'],
+            'addresses.*.complement' => ['nullable', 'string'],
+            'addresses.*.neighborhood' => ['required', 'string'],
+            'addresses.*.city' => ['required', 'string'],
+            'addresses.*.state' => ['required', 'string'],
+            'addresses.*.zip_code' => ['required', 'string'],
+
+            'prescriptions' => ['nullable', 'array'],
+            'prescriptions.*.file' => ['required', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
+            'prescriptions.*.issued_at' => ['required', 'date'],
+            'prescriptions.*.notes' => ['nullable', 'string'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'cpf.regex' => 'O CPF deve estar no formato 000.000.000-00.',
+            'prescriptions.*.file.max' => 'Cada arquivo deve ter no máximo 2MB.',
         ];
     }
 }
