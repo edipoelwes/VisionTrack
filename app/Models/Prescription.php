@@ -19,6 +19,10 @@ class Prescription extends Model
         'issued_at',
     ];
 
+    protected $casts = [
+        'issued_at' => 'date',
+    ];
+
     public function client(): BelongsTo
     {
         return $this->belongsTo(Client::class);
