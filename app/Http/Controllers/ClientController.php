@@ -57,7 +57,7 @@ class ClientController extends Controller
     public function show(Client $client): Response
     {
         return Inertia::render('Client/Show', [
-            'client' => $client,
+            'client' => $client->load('addresses'),
             'prescriptions' => $client->prescriptions->map(function ($prescription) {
                 return [
                     'id' => $prescription->id,
