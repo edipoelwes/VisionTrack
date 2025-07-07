@@ -26,4 +26,6 @@ Route::middleware([
     Route::resource('/clients', ClientController::class);
     Route::post('/clients/{client}/prescriptions', \App\Http\Controllers\ClientPrescriptionStoreController::class)
         ->name('clients.prescriptions.store');
+
+    Route::delete('/prescriptions/{id}', [\App\Http\Controllers\PrescriptionController::class, 'destroy'])->name('prescriptions.destroy');
 });
