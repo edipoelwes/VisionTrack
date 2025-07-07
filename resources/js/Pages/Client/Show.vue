@@ -3,11 +3,18 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import { DocumentIcon } from '@heroicons/vue/24/outline'
 
 import Tooltip from '@/Components/Tooltip.vue'
+import {router} from "@inertiajs/vue3";
 
 const props = defineProps({
     client: Object,
     prescriptions: Array,
 })
+
+function removePrescription(id) {
+    if (confirm('Tem certeza que deseja deletar esta receita?')) {
+        router.delete(route('prescriptions.destroy', id))
+    }
+}
 </script>
 
 <template>
@@ -77,7 +84,7 @@ const props = defineProps({
                                 >
                                     <!-- Botão remover -->
                                     <button
-                                        @click.prevent="$emit('remove', prescription.id)"
+                                        @click.prevent="removePrescription(prescription.id)"
                                         class="absolute top-1 right-1 text-gray-400 hover:text-red-500 dark:hover:text-red-400 focus:outline-none"
                                         aria-label="Remover receita"
                                         title="Remover receita"
