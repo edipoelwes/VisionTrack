@@ -49,7 +49,30 @@ class ClientController extends Controller
      */
     public function store(StoreClientRequest $request): RedirectResponse
     {
-        $request->user()->company->clients()->create($request->all());
+        $validated = $request->validated();
+
+        $client = $request->user()->company->clients()->create([
+            'name' => $validated['name'],
+            'cpf' => $validated['cpf'],
+            'phone' => $validated['phone'],
+            'email' => $validated['email'],
+        ]);
+
+        foreach ($validated['addresses'] as $address) {
+            $client->addresses()->create($address);
+        }
+
+        if (!empty($validated['prescriptions'])) {
+            foreach ($validated['prescriptions'] as $prescriptionData) {
+                $path = $prescriptionData['file']->store('prescriptions', 'public');
+
+                $client->prescriptions()->create([
+                    'image_path' => $path,
+                    'issued_at' => $prescriptionData['issued_at'],
+                    'notes' => $prescriptionData['notes'] ?? null,
+                ]);
+            }
+        }
 
         return redirect()->route('clients.index')->with('success', 'Cliente criado com sucesso.');
     }
