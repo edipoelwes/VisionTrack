@@ -25,6 +25,7 @@
         "@headlessui/vue": "^1.7.23",
         "@heroicons/vue": "^2.2.0",
         "lodash": "^4.17.21",
-        "tippy.js": "^6.3.7"
+        "tippy.js": "^6.3.7",
+        "vue-the-mask": "^0.11.1"
     }
 }
