@@ -54,9 +54,19 @@ class ClientController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Client $client)
+    public function show(Client $client): Response
     {
-        dd($client);
+        return Inertia::render('Client/Show', [
+            'client' => $client,
+            'prescriptions' => $client->prescriptions->map(function ($prescription) {
+                return [
+                    'id' => $prescription->id,
+                    'image_path' => $prescription->image_path,
+                    'notes' => $prescription->notes,
+                    'issued_at' => $prescription->issued_at?->format('d/m/Y'),
+                ];
+            }),
+        ]);
     }
 
     /**
