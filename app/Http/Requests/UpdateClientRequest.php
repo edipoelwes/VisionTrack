@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateClientRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateClientRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->check();
     }
 
     /**
@@ -22,7 +23,34 @@ class UpdateClientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:255'],
+            'cpf' => [
+                'required',
+                'string',
+                'regex:/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/',
+                'max:14',
+                Rule::unique('clients', 'cpf')->ignore($this->client->id),
+            ],
+            'phone' => ['nullable', 'string'],
+            'email' => ['nullable', 'email'],
+
+//            'addresses.*.id' => ['nullable', 'exists:addresses,id'],
+            'addresses' => ['required', 'array', 'min:1'],
+            'addresses.*.type' => ['required', 'in:residential,commercial'],
+            'addresses.*.street' => ['required', 'string'],
+            'addresses.*.number' => ['required', 'string'],
+            'addresses.*.complement' => ['nullable', 'string'],
+            'addresses.*.neighborhood' => ['required', 'string'],
+            'addresses.*.city' => ['required', 'string'],
+            'addresses.*.state' => ['required', 'string'],
+            'addresses.*.zip_code' => ['required', 'string'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'cpf.regex' => 'O CPF deve estar no formato 000.000.000-00.',
         ];
     }
 }
