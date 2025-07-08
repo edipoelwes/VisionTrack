@@ -28,4 +28,7 @@ Route::middleware([
         ->name('clients.prescriptions.store');
 
     Route::delete('/prescriptions/{id}', [\App\Http\Controllers\PrescriptionController::class, 'destroy'])->name('prescriptions.destroy');
+
+    Route::resource('/sales', \App\Http\Controllers\SaleController::class)
+        ->except(['edit', 'update']);
 });
