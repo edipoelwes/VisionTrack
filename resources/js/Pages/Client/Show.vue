@@ -4,11 +4,25 @@ import { DocumentIcon } from '@heroicons/vue/24/outline'
 
 import Tooltip from '@/Components/Tooltip.vue'
 import {router} from "@inertiajs/vue3";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import Modal from "@/Components/Modal.vue";
+import AddPrescriptionForm from "@/Pages/Client/Partials/AddPrescriptionForm.vue";
+import {ref} from "vue";
 
 const props = defineProps({
     client: Object,
     prescriptions: Array,
 })
+
+const showPrescriptionModal = ref(false)
+
+function openPrescriptionModal() {
+    showPrescriptionModal.value = true
+}
+
+function closePrescriptionModal() {
+    showPrescriptionModal.value = false
+}
 
 function removePrescription(id) {
     if (confirm('Tem certeza que deseja deletar esta receita?')) {
@@ -27,6 +41,9 @@ function removePrescription(id) {
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="mb-4 flex justify-end">
+                    <PrimaryButton type="button" @click="openPrescriptionModal">Nova Receita</PrimaryButton>
+                </div>
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-5">
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                         <!-- Painel do Cliente (20%) -->
@@ -126,4 +143,7 @@ function removePrescription(id) {
             </div>
         </div>
     </AppLayout>
+    <Modal :show="showPrescriptionModal" max-width="2xl" @close="closePrescriptionModal">
+        <AddPrescriptionForm :client-id="client.id" @submitted="closePrescriptionModal" @close="closePrescriptionModal"/>
+    </Modal>
 </template>
