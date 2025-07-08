@@ -4,7 +4,6 @@ import { useForm } from '@inertiajs/vue3'
 import InputLabel from '@/Components/InputLabel.vue'
 import TextInput from '@/Components/TextInput.vue'
 import PrimaryButton from '@/Components/PrimaryButton.vue'
-import { onMounted, ref } from 'vue'
 
 const props = defineProps({
     client: Object,
@@ -16,7 +15,6 @@ const form = useForm({
     phone: props.client.phone,
     email: props.client.email,
     addresses: props.client.addresses || [],
-    new_prescriptions: [],
 })
 
 function addAddress() {
@@ -36,23 +34,12 @@ function removeAddress(index) {
     form.addresses.splice(index, 1);
 }
 
-function handleFileUpload(e) {
-    form.new_prescriptions = Array.from(e.target.files);
-}
-
 function submit() {
-    form.post(route('clients.update', props.client.id), {
-        forceFormData: true,
+    form.put(route('clients.update', { client: props.client.id }), {
         onSuccess: () => {
             form.reset();
         },
     });
-}
-
-function deletePrescription(prescriptionId) {
-    if (confirm('Deseja remover esta receita?')) {
-        router.delete(route('prescriptions.destroy', prescriptionId))
-    }
 }
 </script>
 
