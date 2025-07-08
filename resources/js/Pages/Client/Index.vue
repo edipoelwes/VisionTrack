@@ -91,6 +91,7 @@ watch(search, (value) => applySearch(value))
                                 <tr>
                                     <th class="px-6 py-3 text-left">Cliente</th>
                                     <th class="px-6 py-3 text-left">Contato</th>
+                                    <th class="px-6 py-3 text-left">E-mail</th>
                                     <th class="px-6 py-3 text-right">Actions</th>
                                 </tr>
                                 </thead>
@@ -116,6 +117,9 @@ watch(search, (value) => applySearch(value))
                                       >
                                         {{ client.phone }}
                                       </span>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-600 dark:text-gray-300 whitespace-nowrap">
+                                        {{ client.email || 'N/A' }}
                                     </td>
                                     <td class="px-6 py-4 text-right">
                                         <Menu as="div" class="relative inline-block text-left">
