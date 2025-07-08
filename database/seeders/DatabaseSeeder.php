@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
             CompanySeeder::class,
             ClientSeeder::class,
             PrescriptionSeeder::class,
-            AddressSeeder::class
+            AddressSeeder::class,
+            SaleSeeder::class
         ]);
 
         User::factory(1)->create([

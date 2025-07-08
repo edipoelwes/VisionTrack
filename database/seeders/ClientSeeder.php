@@ -21,7 +21,7 @@ class ClientSeeder extends Seeder
             return;
         }
 
-        $clients = Client::factory()->count(1000)->create();
+        $clients = Client::factory()->count(1)->create();
 
         foreach ($clients as $client) {
             $randomCompanies = $companies->random(rand(1, min(2, $companies->count())))->pluck('id');
