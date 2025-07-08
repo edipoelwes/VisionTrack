@@ -89,8 +89,7 @@ watch(search, (value) => applySearch(value))
                             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                                 <thead class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 uppercase text-xs">
                                 <tr>
-                                    <th class="px-6 py-3 text-left">Name</th>
-                                    <th class="px-6 py-3 text-left">Cpf</th>
+                                    <th class="px-6 py-3 text-left">Cliente</th>
                                     <th class="px-6 py-3 text-left">Contato</th>
                                     <th class="px-6 py-3 text-right">Actions</th>
                                 </tr>
@@ -102,12 +101,14 @@ watch(search, (value) => applySearch(value))
                                     class="hover:bg-gray-50 dark:hover:bg-gray-700"
                                 >
                                     <td class="px-6 py-4 text-gray-800 dark:text-gray-100 whitespace-nowrap">
-                                        <Link :href="route('clients.show', { client: client.id })">
-                                            {{ client.name }}
+                                        <Link :href="route('clients.show', {  client: client.id  })" class="block">
+                                            <div class="text-sm font-semibold text-gray-900 dark:text-white">
+                                                {{ client.name }}
+                                            </div>
+                                            <div class="text-xs text-gray-500 dark:text-gray-400">
+                                                CPF: {{ client.cpf }}
+                                            </div>
                                         </Link>
-                                    </td>
-                                    <td class="px-6 py-4 text-gray-600 dark:text-gray-300 whitespace-nowrap">
-                                        {{ client.cpf }}
                                     </td>
                                     <td class="px-6 py-4">
                                       <span
