@@ -59,6 +59,9 @@ function handleFileChange(e, index) {
 function submit() {
     form.post(route('clients.store'), {
         forceFormData: true,
+        onSuccess: () => {
+            form.reset();
+        },
     })
 }
 </script>
