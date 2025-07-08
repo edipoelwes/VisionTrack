@@ -40,17 +40,11 @@ function closePrescriptionModal() {
     selectedClientId.value = null
 }
 
-function editUser(user) {
-    alert(`Editing ${user.name}`)
-}
-
 function deleteClient(client) {
     if (confirm('Tem certeza que deseja deletar este cliente?')) {
         router.delete(route('clients.destroy', client.id))
     }
 }
-
-const detailsUser = (user) => router.get(route('clients.show', { client: user.id }), {}, { preserveState: true })
 
 const applySearch = debounce((value) => {
     router.get(route('clients.index'), {
@@ -135,7 +129,7 @@ watch(search, (value) => applySearch(value))
                                             >
                                                 <MenuItem v-slot="{ active }">
                                                     <button
-                                                        @click="detailsUser(client)"
+                                                        @click="router.get(route('clients.show', { client: client.id }))"
                                                         :class="[
                                                             'group flex items-center w-full px-4 py-2 text-sm',
                                                             active
@@ -163,7 +157,7 @@ watch(search, (value) => applySearch(value))
                                                 </MenuItem>
                                                 <MenuItem v-slot="{ active }">
                                                     <button
-                                                        @click="editUser(client)"
+                                                        @click="() => router.get(route('clients.edit', { client: client.id }))"
                                                         :class="[
                                                             'group flex items-center w-full px-4 py-2 text-sm',
                                                             active
@@ -172,7 +166,7 @@ watch(search, (value) => applySearch(value))
                                                           ]"
                                                     >
                                                         <PencilSquareIcon class="w-4 h-4 mr-2" />
-                                                        Edit
+                                                        Editar
                                                     </button>
                                                 </MenuItem>
 
