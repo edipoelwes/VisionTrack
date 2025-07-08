@@ -4,7 +4,7 @@ import { useForm } from '@inertiajs/vue3'
 const props = defineProps({
     clientId: Number,
 })
-const emit = defineEmits(['submitted'])
+const emit = defineEmits(['submitted', 'close'])
 
 const form = useForm({
     prescription: {
