@@ -102,7 +102,7 @@ class ClientController extends Controller
     public function edit(Client $client): Response
     {
         return Inertia::render('Client/Edit', [
-            'client' => $client->load(['addresses', 'prescriptions']),
+            'client' => $client->load('addresses'),
         ]);
     }
 
@@ -111,7 +111,22 @@ class ClientController extends Controller
      */
     public function update(UpdateClientRequest $request, Client $client)
     {
-        //
+        $validated = $request->validated();
+
+        $client->update([
+            'name' => $validated['name'],
+            'cpf' => $validated['cpf'],
+            'phone' => $validated['phone'],
+            'email' => $validated['email'],
+        ]);
+
+        $client->addresses()->delete();
+
+        foreach ($validated['addresses'] as $address) {
+            $client->addresses()->create($address);
+        }
+
+        return redirect()->route('clients.index')->with('success', 'Cliente atualizado com sucesso!');
     }
 
     /**
