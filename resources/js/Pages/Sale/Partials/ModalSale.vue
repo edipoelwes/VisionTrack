@@ -21,6 +21,7 @@ const saleForm = useForm({
 })
 
 function submitSale() {
+    saleForm.total = parseFloat(saleForm.total.replace(/\./g, '').replace(',', '.'))
     saleForm.post(route('sales.store'), {
         onSuccess: () => {
             emit('submitted')
