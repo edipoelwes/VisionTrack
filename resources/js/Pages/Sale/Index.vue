@@ -112,12 +112,16 @@ watch(search, (value) => applySearch(value))
                                         {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(sale.total) }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div v-if="sale.installments_count" class="inline-flex items-center px-2 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-200">
-                                            {{ sale.installments_count }}x
-                                        </div>
-                                        <div v-else class="inline-flex items-center px-2 py-1 text-xs font-medium rounded-full bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-300">
-                                            —
-                                        </div>
+                                        <Link :href="route('sales.show', {  sale: sale.id  })" class="block">
+                                            <div v-if="sale.installments_count"
+                                                 class="inline-flex items-center px-2 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-200">
+                                                {{ sale.installments_count }}x
+                                            </div>
+                                            <div v-else
+                                                 class="inline-flex items-center px-2 py-1 text-xs font-medium rounded-full bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-300">
+                                                —
+                                            </div>
+                                        </Link>
                                     </td>
                                     <td class="px-6 py-4 text-right">
                                         <Menu as="div" class="relative inline-block text-left">
