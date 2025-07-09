@@ -165,7 +165,7 @@ function removePrescription(id) {
     <!-- Modal: Nova Venda -->
     <ModalSale
         :show="showSaleModal"
-        :clients="[client]" 
+        :clients="[client]"
         @close="showSaleModal = false"
         @submitted="showSaleModal = false"
     />
