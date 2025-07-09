@@ -17,7 +17,7 @@ return new class extends Migration
             $table->decimal('total', 10, 2);
             $table->enum('payment_type', ['cash', 'installment']);
             $table->unsignedTinyInteger('installments_count')->nullable(); // Apenas para parcelado
-            $table->decimal('down_payment', 10, 2)->nullable(); // Valor da entrada
+            $table->decimal('entry_value', 10, 2)->default(0); // Valor da entrada
             $table->date('first_due_date')->nullable(); // Data do primeiro vencimento
             $table->date('sold_at');
             $table->timestamps();
