@@ -18,10 +18,16 @@ const saleForm = useForm({
     payment_type: 'cash',
     installments_count: null,
     sold_at: new Date().toISOString().slice(0, 10),
+    entry_value: null,
+    first_due_date: new Date().toISOString().slice(0, 10),
 })
 
 function submitSale() {
     saleForm.total = parseFloat(saleForm.total.replace(/\./g, '').replace(',', '.'))
+    if (saleForm.entry_value) {
+        saleForm.entry_value = parseFloat(saleForm.entry_value.replace(/\./g, '').replace(',', '.'))
+    }
+
     saleForm.post(route('sales.store'), {
         onSuccess: () => {
             emit('submitted')
@@ -48,7 +54,6 @@ function submitSale() {
 
             <!-- Valor Total & Data da Venda -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Valor total -->
                 <div>
                     <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">Valor Total (R$)</label>
                     <input
@@ -64,7 +69,6 @@ function submitSale() {
                     />
                 </div>
 
-                <!-- Data da venda -->
                 <div>
                     <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">Data da Venda</label>
                     <input
@@ -85,6 +89,33 @@ function submitSale() {
                     <option value="cash">À vista</option>
                     <option value="installment">Parcelado</option>
                 </select>
+            </div>
+
+            <!-- Entrada & 1º Vencimento -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" v-if="saleForm.payment_type === 'installment'">
+                <div>
+                    <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">Valor de Entrada (R$)</label>
+                    <input
+                        v-model.lazy="saleForm.entry_value"
+                        v-money="{
+                          decimal: ',',
+                          thousands: '.',
+                          prefix: '',
+                          precision: 2,
+                          masked: false
+                        }"
+                        class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white px-3 py-2"
+                    />
+                </div>
+
+                <div>
+                    <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">1º Vencimento</label>
+                    <input
+                        v-model="saleForm.first_due_date"
+                        type="date"
+                        class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white px-3 py-2"
+                    />
+                </div>
             </div>
 
             <!-- Parcelas -->
