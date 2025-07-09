@@ -20,11 +20,9 @@ class ClientController extends Controller
         $perPage = request()->input('per_page', 10);
         $clients = Client::query()
             ->when(request()->input('search'), function ($query, $search) {
-                $sanitizedSearch = preg_replace('/\D/', '', $search);
-                $lowerSearch = strtolower($search);
-                $query->where(function ($q) use ($lowerSearch, $sanitizedSearch) {
-                    $q->whereRaw('LOWER(name) LIKE ?', ["%{$lowerSearch}%"])
-                        ->orWhereRaw("REPLACE(REPLACE(REPLACE(cpf, '.', ''), '-', ''), ' ', '') LIKE ?", ["%{$sanitizedSearch}%"]);
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                        ->orWhere('cpf', 'like', "%{$search}%");
                 });
             })
             ->orderBy('name')

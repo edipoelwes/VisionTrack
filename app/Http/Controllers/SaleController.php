@@ -23,6 +23,15 @@ class SaleController extends Controller
         $perPage = request()->input('per_page', 10);
         $sales = Sale::query()
             ->with(['client', 'installments'])
+            ->when(request()->input('search'), function ($query, $search) {
+                $query->whereHas('client', function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                        ->orWhere('cpf', 'like', "%{$search}%");
+                });
+            })
+            ->when(request()->input('date'), function ($query, $date) {
+                $query->whereDate('sold_at', $date);
+            })
             ->orderBy('id', 'desc')
             ->paginate($perPage)
             ->withQueryString();
