@@ -17,6 +17,7 @@ const saleForm = useForm({
     total: null,
     payment_type: 'cash',
     installments_count: null,
+    sold_at: new Date().toISOString().slice(0, 10),
 })
 
 function submitSale() {
@@ -44,16 +45,38 @@ function submitSale() {
                 />
             </div>
 
-            <!-- Valor total -->
-            <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">Valor Total (R$)</label>
-                <input v-model="saleForm.total" type="number" step="0.01" min="0" class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white px-3 py-2" />
+            <!-- Valor Total & Data da Venda -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Valor total -->
+                <div>
+                    <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">Valor Total (R$)</label>
+                    <input
+                        v-model="saleForm.total"
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white px-3 py-2"
+                    />
+                </div>
+
+                <!-- Data da venda -->
+                <div>
+                    <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">Data da Venda</label>
+                    <input
+                        v-model="saleForm.sold_at"
+                        type="date"
+                        class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white px-3 py-2"
+                    />
+                </div>
             </div>
 
             <!-- Tipo de Pagamento -->
             <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">Tipo de Pagamento</label>
-                <select v-model="saleForm.payment_type" class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white px-3 py-2">
+                <select
+                    v-model="saleForm.payment_type"
+                    class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white px-3 py-2"
+                >
                     <option value="cash">À vista</option>
                     <option value="installment">Parcelado</option>
                 </select>
@@ -62,12 +85,18 @@ function submitSale() {
             <!-- Parcelas -->
             <div v-if="saleForm.payment_type === 'installment'">
                 <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">Quantidade de Parcelas</label>
-                <input v-model="saleForm.installments_count" type="number" min="1" max="36" class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white px-3 py-2" />
+                <input
+                    v-model="saleForm.installments_count"
+                    type="number"
+                    min="1"
+                    max="36"
+                    class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white px-3 py-2"
+                />
             </div>
 
             <!-- Botões -->
             <div class="flex justify-end gap-2 pt-4">
-                <SecondaryButton @click="emit('close')" type="button">Cancelar</SecondaryButton>
+                <SecondaryButton @click="$emit('close')" type="button">Cancelar</SecondaryButton>
                 <PrimaryButton type="submit">Salvar</PrimaryButton>
             </div>
         </form>
