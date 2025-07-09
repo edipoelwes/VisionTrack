@@ -16,6 +16,7 @@ import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/vue'
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 import Pagination from "@/Components/Pagination.vue";
+import {formatDateBR, formatCurrencyBR} from "@/Utils/formatters.js";
 
 const props = defineProps({
     sales: Object,
@@ -71,6 +72,7 @@ watch(search, (value) => applySearch(value))
                                 <thead class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 uppercase text-xs">
                                 <tr>
                                     <th class="px-6 py-3 text-left">Cliente</th>
+                                    <th class="px-6 py-3 text-left">Data da Venda</th>
                                     <th class="px-6 py-3 text-left">Tipo Pagamento</th>
                                     <th class="px-6 py-3 text-left">Total</th>
                                     <th class="px-6 py-3 text-left">Parcelas</th>
@@ -103,6 +105,9 @@ watch(search, (value) => applySearch(value))
                                             </div>
                                         </Link>
                                     </td>
+                                    <td class="px-4 py-2 text-gray-600 dark:text-gray-300">
+                                        {{ formatDateBR(sale.sold_at) }}
+                                    </td>
                                     <td class="px-6 py-4 text-gray-600 dark:text-gray-300 whitespace-nowrap">
                                         <div class="flex items-center gap-2">
                                             <BanknotesIcon
@@ -119,7 +124,7 @@ watch(search, (value) => applySearch(value))
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 text-gray-600 dark:text-gray-300 whitespace-nowrap">
-                                        {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(sale.total) }}
+                                        {{ formatCurrencyBR(sale.total) }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <Link :href="route('sales.show', {  sale: sale.id  })" class="block">
