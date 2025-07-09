@@ -104,4 +104,11 @@ class SaleController extends Controller
             'sale' => $sale->load(['client', 'installments']),
         ]);
     }
+
+    public function destroy(Sale $sale): RedirectResponse
+    {
+        $sale->delete();
+
+        return redirect()->back()->with('success', 'Lançamento deletado com sucesso.');
+    }
 }
