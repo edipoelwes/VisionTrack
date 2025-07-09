@@ -1,5 +1,6 @@
 <script setup>
 import { CreditCardIcon, BanknotesIcon } from '@heroicons/vue/24/solid'
+import { formatDateBR, formatCurrencyBR } from '@/Utils/formatters'
 
 const props = defineProps({
     sale: Object,
@@ -24,11 +25,11 @@ const props = defineProps({
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
                 <p class="text-sm text-gray-500 dark:text-gray-400">Valor Total</p>
-                <p class="text-lg font-semibold text-gray-800 dark:text-white">R$ {{ Number(sale.total).toFixed(2) }}</p>
+                <p class="text-lg font-semibold text-gray-800 dark:text-white">{{ formatCurrencyBR(sale.total) }}</p>
             </div>
             <div>
                 <p class="text-sm text-gray-500 dark:text-gray-400">Data da Venda</p>
-                <p class="text-lg font-semibold text-gray-800 dark:text-white">{{ sale.sold_at }}</p>
+                <p class="text-lg font-semibold text-gray-800 dark:text-white">{{ formatDateBR(sale.sold_at) }}</p>
             </div>
             <div v-if="sale.installments_count">
                 <p class="text-sm text-gray-500 dark:text-gray-400">Parcelas</p>

@@ -1,4 +1,5 @@
 <script setup>
+import { formatDateBR, formatCurrencyBR } from '@/Utils/formatters'
 const props = defineProps({
     installments: Array,
 })
@@ -20,8 +21,8 @@ const props = defineProps({
                 <tbody class="divide-y divide-gray-200 dark:divide-gray-600">
                 <tr v-for="installment in installments" :key="installment.id" class="hover:bg-gray-50 dark:hover:bg-gray-700">
                     <td class="px-4 py-2 text-gray-800 dark:text-white">{{ installment.number }}</td>
-                    <td class="px-4 py-2 text-gray-600 dark:text-gray-300">R$ {{ Number(installment.amount).toFixed(2) }}</td>
-                    <td class="px-4 py-2 text-gray-600 dark:text-gray-300">{{ installment.due_date }}</td>
+                    <td class="px-4 py-2 text-gray-600 dark:text-gray-300">R$ {{ formatCurrencyBR(installment.amount) }}</td>
+                    <td class="px-4 py-2 text-gray-600 dark:text-gray-300">{{ formatDateBR(installment.due_date) }}</td>
                     <td class="px-4 py-2">
                             <span
                                 class="px-2 py-1 text-xs rounded font-semibold"
