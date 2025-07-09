@@ -14,17 +14,11 @@ const props = defineProps({
             :key="sale.id"
             class="bg-white dark:bg-gray-800 shadow rounded p-6 space-y-4"
         >
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <!-- Lado esquerdo: resumo da venda (25%) -->
-                <div class="md:col-span-1">
-                    <SaleSummary :sale="sale" />
-                </div>
+            <!-- Resumo da venda -->
+            <SaleSummary :sale="sale" />
 
-                <!-- Lado direito: parcelas (75%) -->
-                <div class="md:col-span-3">
-                    <InstallmentsTable :installments="sale.installments" />
-                </div>
-            </div>
+            <!-- Tabela de parcelas -->
+            <InstallmentsTable :installments="sale.installments" />
         </div>
     </div>
 </template>
