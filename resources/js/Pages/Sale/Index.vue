@@ -1,5 +1,6 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
+import ModalSale from './Partials/ModalSale.vue';
 
 import {ref, watch} from "vue";
 import {Link, router} from '@inertiajs/vue3';
@@ -18,9 +19,11 @@ import Pagination from "@/Components/Pagination.vue";
 
 const props = defineProps({
     sales: Object,
+    clients: Array,
     perPage: Number,
 })
 
+const showSaleModal = ref(false)
 const search = ref(props.sales.meta?.search || '')
 const selectedPerPage = ref(props.perPage)
 
@@ -61,7 +64,7 @@ watch(search, (value) => applySearch(value))
                                 class="w-full md:w-1/3 rounded border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:ring focus:ring-indigo-300 text-sm px-3 py-2"
                             />
 
-                            <PrimaryButton :href="route('sales.create')" type="button">Nova Venda</PrimaryButton>
+                            <PrimaryButton @click="showSaleModal = true" type="button">Nova Venda</PrimaryButton>
                         </div>
                         <div class="overflow-x-auto border border-gray-200 dark:border-gray-700 rounded shadow bg-white dark:bg-gray-800">
                             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -167,4 +170,10 @@ watch(search, (value) => applySearch(value))
             </div>
         </div>
     </AppLayout>
+    <ModalSale
+        :show="showSaleModal"
+        :clients="clients"
+        @close="showSaleModal = false"
+        @submitted="showSaleModal = false"
+    />
 </template>
