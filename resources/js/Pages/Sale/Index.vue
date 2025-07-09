@@ -28,16 +28,28 @@
                                 </div>
 
                                 <!-- Data da venda -->
-                                <div class="flex flex-col w-full sm:w-44">
-                                    <label for="searchDate" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                        Data da Venda
-                                    </label>
-                                    <input
-                                        id="searchDate"
-                                        v-model="searchDate"
-                                        type="date"
-                                        class="w-full rounded border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:ring focus:ring-indigo-300 text-sm px-4 py-2"
-                                    />
+                                <div class="flex items-end gap-2 w-full sm:w-auto">
+                                    <!-- Campo de data -->
+                                    <div class="flex flex-col">
+                                        <label for="searchDate" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                            Data da Venda
+                                        </label>
+                                        <input
+                                            id="searchDate"
+                                            v-model="searchDate"
+                                            type="date"
+                                            class="w-full sm:w-44 rounded border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:ring focus:ring-indigo-300 text-sm px-4 py-2"
+                                        />
+                                    </div>
+
+                                    <!-- Botão compactado -->
+                                    <button
+                                        type="button"
+                                        @click="applySearch"
+                                        class="h-10 w-10 inline-flex items-center justify-center rounded-md bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-700 dark:hover:bg-indigo-600 text-white"
+                                    >
+                                        <MagnifyingGlassIcon class="w-5 h-5" />
+                                    </button>
                                 </div>
                             </div>
 
@@ -191,6 +203,7 @@ import {
     EyeIcon,
     CreditCardIcon,
     BanknotesIcon,
+    MagnifyingGlassIcon
 } from '@heroicons/vue/24/solid'
 import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/vue'
 import PrimaryButton from "@/Components/PrimaryButton.vue";
@@ -224,5 +237,5 @@ watch(selectedPerPage, (value) => {
     router.get(route('sales.index'), { per_page: value }, { preserveState: true })
 })
 
-watch([search, searchDate], applySearch)
+watch(search, (value) => applySearch(value))
 </script>
