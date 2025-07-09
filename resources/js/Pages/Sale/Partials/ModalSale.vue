@@ -55,7 +55,7 @@ function submitSale() {
                         v-money="{
                           decimal: ',',
                           thousands: '.',
-                          prefix: 'R$ ',
+                          prefix: '',
                           precision: 2,
                           masked: false
                         }"
