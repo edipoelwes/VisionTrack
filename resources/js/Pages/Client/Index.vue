@@ -194,7 +194,7 @@ watch(search, (value) => applySearch(value))
                                                           ]"
                                                     >
                                                         <TrashIcon class="w-4 h-4 mr-2" />
-                                                        Delete
+                                                        Remover
                                                     </button>
                                                 </MenuItem>
                                             </MenuItems>
