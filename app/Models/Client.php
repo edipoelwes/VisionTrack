@@ -28,4 +28,9 @@ class Client extends Model
     {
         return $this->hasMany(Address::class);
     }
+
+    public function sales(): HasMany
+    {
+        return $this->hasMany(Sale::class)->orderByDesc('sold_at');
+    }
 }
