@@ -102,21 +102,29 @@ watch(search, (value) => applySearch(value))
                                     class="hover:bg-gray-50 dark:hover:bg-gray-700"
                                 >
                                     <td class="px-6 py-4 text-gray-800 dark:text-gray-100 whitespace-nowrap">
-                                        <Link :href="route('clients.show', {  client: client.id  })" class="block">
-                                            <div class="text-sm font-semibold text-gray-900 dark:text-white">
-                                                {{ client.name }}
+                                        <Link :href="route('clients.show', { client: client.id })" class="flex items-center gap-3 group">
+                                            <!-- Avatar -->
+                                            <div class="flex-shrink-0">
+                                                <div
+                                                    class="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center text-sm font-bold uppercase group-hover:scale-105 transition-transform"
+                                                >
+                                                    {{ client.name.charAt(0) }}
+                                                </div>
                                             </div>
-                                            <div class="text-xs text-gray-500 dark:text-gray-400">
-                                                CPF: {{ client.cpf }}
+
+                                            <!-- Nome e CPF -->
+                                            <div>
+                                                <div class="text-sm font-semibold text-gray-900 dark:text-white leading-tight">
+                                                    {{ client.name }}
+                                                </div>
+                                                <div class="text-xs text-gray-500 dark:text-gray-400">
+                                                    CPF: {{ client.cpf }}
+                                                </div>
                                             </div>
                                         </Link>
                                     </td>
-                                    <td class="px-6 py-4">
-                                      <span
-                                          class="inline-block px-2 py-1 text-xs font-medium rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-700 dark:text-indigo-100"
-                                      >
+                                    <td class="px-6 py-4 text-gray-600 dark:text-gray-300 whitespace-nowrap">
                                         {{ client.phone }}
-                                      </span>
                                     </td>
                                     <td class="px-6 py-4 text-gray-600 dark:text-gray-300 whitespace-nowrap">
                                         {{ client.email || 'N/A' }}

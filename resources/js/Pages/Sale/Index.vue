@@ -84,12 +84,22 @@ watch(search, (value) => applySearch(value))
                                     class="hover:bg-gray-50 dark:hover:bg-gray-700"
                                 >
                                     <td class="px-6 py-4 text-gray-800 dark:text-gray-100 whitespace-nowrap">
-                                        <Link :href="route('clients.show', {  client: sale.client.id  })" class="block">
-                                            <div class="text-sm font-semibold text-gray-900 dark:text-white">
-                                                {{ sale.client.name }}
+                                        <Link :href="route('clients.show', {  client: sale.client.id  })" class="flex items-center gap-3 group">
+                                            <!-- Avatar -->
+                                            <div class="flex-shrink-0">
+                                                <div
+                                                    class="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center text-sm font-bold uppercase group-hover:scale-105 transition-transform"
+                                                >
+                                                    {{ sale.client.name.charAt(0) }}
+                                                </div>
                                             </div>
-                                            <div class="text-xs text-gray-500 dark:text-gray-400">
-                                                CPF: {{ sale.client.cpf }}
+                                            <div>
+                                                <div class="text-sm font-semibold text-gray-900 dark:text-white leading-tight">
+                                                    {{ sale.client.name }}
+                                                </div>
+                                                <div class="text-xs text-gray-500 dark:text-gray-400">
+                                                    CPF: {{ sale.client.cpf }}
+                                                </div>
                                             </div>
                                         </Link>
                                     </td>
