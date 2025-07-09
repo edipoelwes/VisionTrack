@@ -8,6 +8,7 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Modal from "@/Components/Modal.vue";
 import AddPrescriptionForm from "@/Pages/Client/Partials/AddPrescriptionForm.vue";
 import {ref} from "vue";
+import ModalSale from "@/Pages/Sale/Partials/ModalSale.vue";
 
 const props = defineProps({
     client: Object,
@@ -15,6 +16,7 @@ const props = defineProps({
 })
 
 const showPrescriptionModal = ref(false)
+const showSaleModal = ref(false)
 
 function openPrescriptionModal() {
     showPrescriptionModal.value = true
@@ -41,8 +43,9 @@ function removePrescription(id) {
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="mb-4 flex justify-end">
+                <div class="mb-4 flex justify-end gap-2">
                     <PrimaryButton type="button" @click="openPrescriptionModal">Nova Receita</PrimaryButton>
+                    <PrimaryButton @click="showSaleModal = true" type="button">Nova Venda</PrimaryButton>
                 </div>
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-5">
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -146,4 +149,11 @@ function removePrescription(id) {
     <Modal :show="showPrescriptionModal" max-width="2xl" @close="closePrescriptionModal">
         <AddPrescriptionForm :client-id="client.id" @submitted="closePrescriptionModal" @close="closePrescriptionModal"/>
     </Modal>
+
+    <ModalSale
+        :show="showSaleModal"
+        :clients="[]"
+        @close="showSaleModal = false"
+        @submitted="showSaleModal = false"
+    />
 </template>
