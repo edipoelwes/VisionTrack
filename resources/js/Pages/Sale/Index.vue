@@ -209,9 +209,10 @@ const search = ref(props.sales.meta?.search || '')
 const searchDate = ref('')
 const selectedPerPage = ref(props.perPage)
 
-const applySearch = debounce((value) => {
+const applySearch = debounce(() => {
     router.get(route('sales.index'), {
-        search: value,
+        search: search.value,
+        date: searchDate.value,
         per_page: selectedPerPage.value,
     }, {
         preserveState: true,
@@ -223,5 +224,5 @@ watch(selectedPerPage, (value) => {
     router.get(route('sales.index'), { per_page: value }, { preserveState: true })
 })
 
-watch(search, (value) => applySearch(value))
+watch([search, searchDate], applySearch)
 </script>
