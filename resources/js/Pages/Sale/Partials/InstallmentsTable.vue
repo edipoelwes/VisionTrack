@@ -15,6 +15,7 @@ const props = defineProps({
                     <th class="px-4 py-2">#</th>
                     <th class="px-4 py-2">Valor</th>
                     <th class="px-4 py-2">Vencimento</th>
+                    <th class="px-4 py-2">Data de Pagamento</th>
                     <th class="px-4 py-2">Status</th>
                 </tr>
                 </thead>
@@ -32,6 +33,23 @@ const props = defineProps({
 
                     <td class="px-4 py-2 text-gray-600 dark:text-gray-300">
                         {{ formatDateBR(installment.due_date) }}
+                    </td>
+
+                    <td class="px-4 py-2 text-gray-600 dark:text-gray-300 text-sm">
+                        <template v-if="installment.paid_at">
+                            {{ formatDateBR(installment.paid_at) }}
+                        </template>
+                        <template v-else>
+                            <span class="inline-flex items-center gap-1 text-gray-400 dark:text-gray-500 italic">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="w-4 h-4"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"/>
+                                —
+                            </span>
+                        </template>
                     </td>
 
                     <td class="px-4 py-2">
