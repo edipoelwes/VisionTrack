@@ -85,4 +85,14 @@ class SaleController extends Controller
             return back()->with('error', 'Erro ao registrar a venda: ' . $e->getMessage());
         }
     }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Sale $sale): Response
+    {
+        return Inertia::render('Sale/Show', [
+            'sale' => $sale->load(['client', 'installments']),
+        ]);
+    }
 }
