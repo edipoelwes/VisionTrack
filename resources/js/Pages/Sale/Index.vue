@@ -1,3 +1,59 @@
+<script setup>
+import AppLayout from '@/Layouts/AppLayout.vue';
+import ModalSale from './Partials/ModalSale.vue';
+
+import {ref, watch} from "vue";
+import {Link, router} from '@inertiajs/vue3';
+import debounce from 'lodash/debounce';
+
+import {
+    EllipsisVerticalIcon,
+    EyeIcon,
+    CreditCardIcon,
+    BanknotesIcon,
+    MagnifyingGlassIcon
+} from '@heroicons/vue/24/solid'
+import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/vue'
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import SelectInput from "@/Components/SelectInput.vue";
+import Pagination from "@/Components/Pagination.vue";
+import {formatDateBR, formatCurrencyBR} from "@/Utils/formatters.js";
+import {TrashIcon} from "@heroicons/vue/24/solid/index.js";
+
+const props = defineProps({
+    sales: Object,
+    clients: Array,
+    perPage: Number,
+})
+
+const showSaleModal = ref(false)
+const search = ref(props.sales.meta?.search || '')
+const searchDate = ref('')
+const selectedPerPage = ref(props.perPage)
+
+const applySearch = debounce(() => {
+    router.get(route('sales.index'), {
+        search: search.value,
+        date: searchDate.value,
+        per_page: selectedPerPage.value,
+    }, {
+        preserveState: true,
+        replace: true,
+    })
+}, 500)
+
+function deleteSale(sale) {
+    if (confirm('Tem certeza que deseja remover este lançamento?')) {
+        router.delete(route('sales.destroy', sale.id))
+    }
+}
+
+watch(selectedPerPage, (value) => {
+    router.get(route('sales.index'), { per_page: value }, { preserveState: true })
+})
+
+watch(search, (value) => applySearch(value))
+</script>
 <template>
     <AppLayout title="Dashboard">
         <template #header>
@@ -156,6 +212,20 @@
                                                         Detalhes
                                                     </button>
                                                 </MenuItem>
+                                                <MenuItem v-slot="{ active }">
+                                                    <button
+                                                        @click="deleteSale(sale)"
+                                                        :class="[
+                                                            'group flex items-center w-full px-4 py-2 text-sm',
+                                                            active
+                                                              ? 'bg-red-100 text-red-700 dark:bg-red-600 dark:text-white'
+                                                              : 'text-red-600 dark:text-red-400',
+                                                          ]"
+                                                    >
+                                                        <TrashIcon class="w-4 h-4 mr-2" />
+                                                        Remover
+                                                    </button>
+                                                </MenuItem>
                                             </MenuItems>
                                         </Menu>
                                     </td>
@@ -189,53 +259,3 @@
         @submitted="showSaleModal = false"
     />
 </template>
-
-<script setup>
-import AppLayout from '@/Layouts/AppLayout.vue';
-import ModalSale from './Partials/ModalSale.vue';
-
-import {ref, watch} from "vue";
-import {Link, router} from '@inertiajs/vue3';
-import debounce from 'lodash/debounce';
-
-import {
-    EllipsisVerticalIcon,
-    EyeIcon,
-    CreditCardIcon,
-    BanknotesIcon,
-    MagnifyingGlassIcon
-} from '@heroicons/vue/24/solid'
-import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/vue'
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import SelectInput from "@/Components/SelectInput.vue";
-import Pagination from "@/Components/Pagination.vue";
-import {formatDateBR, formatCurrencyBR} from "@/Utils/formatters.js";
-
-const props = defineProps({
-    sales: Object,
-    clients: Array,
-    perPage: Number,
-})
-
-const showSaleModal = ref(false)
-const search = ref(props.sales.meta?.search || '')
-const searchDate = ref('')
-const selectedPerPage = ref(props.perPage)
-
-const applySearch = debounce(() => {
-    router.get(route('sales.index'), {
-        search: search.value,
-        date: searchDate.value,
-        per_page: selectedPerPage.value,
-    }, {
-        preserveState: true,
-        replace: true,
-    })
-}, 500)
-
-watch(selectedPerPage, (value) => {
-    router.get(route('sales.index'), { per_page: value }, { preserveState: true })
-})
-
-watch(search, (value) => applySearch(value))
-</script>
