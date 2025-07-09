@@ -19,19 +19,40 @@ const props = defineProps({
                 </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 dark:divide-gray-600">
-                <tr v-for="installment in installments" :key="installment.id" class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                <tr
+                    v-for="installment in installments"
+                    :key="installment.id"
+                    class="hover:bg-gray-50 dark:hover:bg-gray-700"
+                >
                     <td class="px-4 py-2 text-gray-800 dark:text-white">{{ installment.number }}</td>
-                    <td class="px-4 py-2 text-gray-600 dark:text-gray-300">R$ {{ formatCurrencyBR(installment.amount) }}</td>
-                    <td class="px-4 py-2 text-gray-600 dark:text-gray-300">{{ formatDateBR(installment.due_date) }}</td>
+
+                    <td class="px-4 py-2 text-gray-600 dark:text-gray-300">
+                        {{ formatCurrencyBR(installment.amount) }}
+                    </td>
+
+                    <td class="px-4 py-2 text-gray-600 dark:text-gray-300">
+                        {{ formatDateBR(installment.due_date) }}
+                    </td>
+
                     <td class="px-4 py-2">
-                            <span
-                                class="px-2 py-1 text-xs rounded font-semibold"
-                                :class="installment.paid_at
+                        <span
+                            class="px-2 py-1 text-xs rounded font-semibold"
+                            :class="[
+                                installment.paid_at
                                     ? 'bg-green-100 text-green-700 dark:bg-green-700 dark:text-white'
-                                    : 'bg-yellow-100 text-yellow-700 dark:bg-yellow-700 dark:text-white'"
-                            >
-                                {{ installment.paid_at ? 'Pago' : 'Pendente' }}
-                            </span>
+                                    : new Date(installment.due_date) < new Date()
+                                        ? 'bg-red-100 text-red-700 dark:bg-red-700 dark:text-white'
+                                        : 'bg-yellow-100 text-yellow-700 dark:bg-yellow-700 dark:text-white'
+                            ]"
+                        >
+                            {{
+                                installment.paid_at
+                                    ? 'Pago'
+                                    : new Date(installment.due_date) < new Date()
+                                        ? 'Vencido'
+                                        : 'Pendente'
+                            }}
+                        </span>
                     </td>
                 </tr>
                 </tbody>
