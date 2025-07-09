@@ -67,8 +67,8 @@
                                     <th class="px-6 py-3 text-left">Cliente</th>
                                     <th class="px-6 py-3 text-left">Data da Venda</th>
                                     <th class="px-6 py-3 text-left">Tipo Pagamento</th>
-                                    <th class="px-6 py-3 text-left">Total</th>
-                                    <th class="px-6 py-3 text-left">Parcelas</th>
+                                    <th class="px-6 py-3 text-right">Total</th>
+                                    <th class="px-6 py-3 text-center">Parcelas</th>
                                     <th class="px-6 py-3 text-right">Ações</th>
                                 </tr>
                                 </thead>
@@ -116,10 +116,10 @@
                                             </span>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4 text-gray-600 dark:text-gray-300 whitespace-nowrap">
+                                    <td class="px-6 py-4 text-right text-gray-600 dark:text-gray-300 whitespace-nowrap">
                                         {{ formatCurrencyBR(sale.total) }}
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
+                                    <td class="px-6 py-4 text-center whitespace-nowrap">
                                         <Link :href="route('sales.show', {  sale: sale.id  })" class="block">
                                             <div v-if="sale.installments_count"
                                                  class="inline-flex items-center px-2 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-200">
