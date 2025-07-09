@@ -9,6 +9,7 @@ import Modal from "@/Components/Modal.vue";
 import AddPrescriptionForm from "@/Pages/Client/Partials/AddPrescriptionForm.vue";
 import {ref} from "vue";
 import ModalSale from "@/Pages/Sale/Partials/ModalSale.vue";
+import ListWithInstallments from "@/Pages/Sale/Partials/ListWithInstallments.vue";
 
 const props = defineProps({
     client: Object,
@@ -142,6 +143,10 @@ function removePrescription(id) {
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="py-8 max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <ListWithInstallments :sales="client.sales" />
                 </div>
             </div>
         </div>
