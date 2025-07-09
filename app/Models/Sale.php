@@ -14,8 +14,14 @@ class Sale extends Model
     protected $fillable = [
         'client_id',
         'total',
+        'sold_at',
         'payment_type',
         'installments_count',
+    ];
+
+    protected $casts = [
+        'sold_at' => 'date',
+        'installments_count' => 'integer',
     ];
 
     public function client(): BelongsTo
