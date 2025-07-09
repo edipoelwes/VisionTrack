@@ -1,51 +1,3 @@
-<script setup>
-import AppLayout from '@/Layouts/AppLayout.vue';
-import ModalSale from './Partials/ModalSale.vue';
-
-import {ref, watch} from "vue";
-import {Link, router} from '@inertiajs/vue3';
-import debounce from 'lodash/debounce';
-
-import {
-    EllipsisVerticalIcon,
-    EyeIcon,
-    CreditCardIcon,
-    BanknotesIcon,
-} from '@heroicons/vue/24/solid'
-import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/vue'
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import SelectInput from "@/Components/SelectInput.vue";
-import Pagination from "@/Components/Pagination.vue";
-import {formatDateBR, formatCurrencyBR} from "@/Utils/formatters.js";
-
-const props = defineProps({
-    sales: Object,
-    clients: Array,
-    perPage: Number,
-})
-
-const showSaleModal = ref(false)
-const search = ref(props.sales.meta?.search || '')
-const searchDate = ref('')
-const selectedPerPage = ref(props.perPage)
-
-const applySearch = debounce((value) => {
-    router.get(route('sales.index'), {
-        search: value,
-        per_page: selectedPerPage.value,
-    }, {
-        preserveState: true,
-        replace: true,
-    })
-}, 500)
-
-watch(selectedPerPage, (value) => {
-    router.get(route('sales.index'), { per_page: value }, { preserveState: true })
-})
-
-watch(search, (value) => applySearch(value))
-</script>
-
 <template>
     <AppLayout title="Dashboard">
         <template #header>
@@ -225,3 +177,51 @@ watch(search, (value) => applySearch(value))
         @submitted="showSaleModal = false"
     />
 </template>
+
+<script setup>
+import AppLayout from '@/Layouts/AppLayout.vue';
+import ModalSale from './Partials/ModalSale.vue';
+
+import {ref, watch} from "vue";
+import {Link, router} from '@inertiajs/vue3';
+import debounce from 'lodash/debounce';
+
+import {
+    EllipsisVerticalIcon,
+    EyeIcon,
+    CreditCardIcon,
+    BanknotesIcon,
+} from '@heroicons/vue/24/solid'
+import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/vue'
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import SelectInput from "@/Components/SelectInput.vue";
+import Pagination from "@/Components/Pagination.vue";
+import {formatDateBR, formatCurrencyBR} from "@/Utils/formatters.js";
+
+const props = defineProps({
+    sales: Object,
+    clients: Array,
+    perPage: Number,
+})
+
+const showSaleModal = ref(false)
+const search = ref(props.sales.meta?.search || '')
+const searchDate = ref('')
+const selectedPerPage = ref(props.perPage)
+
+const applySearch = debounce((value) => {
+    router.get(route('sales.index'), {
+        search: value,
+        per_page: selectedPerPage.value,
+    }, {
+        preserveState: true,
+        replace: true,
+    })
+}, 500)
+
+watch(selectedPerPage, (value) => {
+    router.get(route('sales.index'), { per_page: value }, { preserveState: true })
+})
+
+watch(search, (value) => applySearch(value))
+</script>
