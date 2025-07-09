@@ -13,7 +13,7 @@ const props = defineProps({
 const emit = defineEmits(['close', 'submitted'])
 
 const saleForm = useForm({
-    client_id: null,
+    client_id: props.clients.length === 1 ? props.clients[0].id : null,
     total: null,
     payment_type: 'cash',
     installments_count: null,
