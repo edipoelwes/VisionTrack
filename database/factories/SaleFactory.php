@@ -25,6 +25,7 @@ class SaleFactory extends Factory
             'total' => $this->faker->randomFloat(2, 100, 2000),
             'payment_type' => $isInstallment ? 'installment' : 'cash',
             'installments_count' => $installments,
+            'sold_at' => $this->faker->dateTimeBetween('-6 months', 'now')->format('Y-m-d'),
         ];
     }
 }
