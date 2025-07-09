@@ -51,10 +51,14 @@ function submitSale() {
                 <div>
                     <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">Valor Total (R$)</label>
                     <input
-                        v-model="saleForm.total"
-                        type="number"
-                        step="0.01"
-                        min="0"
+                        v-model.lazy="saleForm.total"
+                        v-money="{
+                          decimal: ',',
+                          thousands: '.',
+                          prefix: 'R$ ',
+                          precision: 2,
+                          masked: false
+                        }"
                         class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white px-3 py-2"
                     />
                 </div>
