@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\Sale;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -22,6 +23,7 @@ class SaleController extends Controller
 
         return Inertia::render('Sale/Index', [
             'sales' => $sales,
+            'clients' => Client::all(),
             'perPage' => (int) $perPage,
         ]);
     }
