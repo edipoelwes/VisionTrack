@@ -14,19 +14,17 @@ const props = defineProps({
             :key="sale.id"
             class="bg-white dark:bg-gray-800 shadow rounded p-6 space-y-4"
         >
-            <!-- Cabeçalho com dados do cliente -->
-<!--            <div>-->
-<!--                <h3 class="text-lg font-bold text-gray-800 dark:text-white">-->
-<!--                    {{ sale.client.name }}-->
-<!--                </h3>-->
-<!--                <p class="text-sm text-gray-500 dark:text-gray-400">{{ sale.client.cpf }}</p>-->
-<!--            </div>-->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <!-- Lado esquerdo: resumo da venda (25%) -->
+                <div class="md:col-span-1">
+                    <SaleSummary :sale="sale" />
+                </div>
 
-            <!-- Resumo da venda -->
-            <SaleSummary :sale="sale" />
-
-            <!-- Tabela de parcelas -->
-            <InstallmentsTable :installments="sale.installments" />
+                <!-- Lado direito: parcelas (75%) -->
+                <div class="md:col-span-3">
+                    <InstallmentsTable :installments="sale.installments" />
+                </div>
+            </div>
         </div>
     </div>
 </template>
