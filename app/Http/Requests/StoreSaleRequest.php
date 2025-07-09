@@ -34,6 +34,17 @@ class StoreSaleRequest extends FormRequest
                 'max:36',
                 Rule::requiredIf($this->payment_type === 'installment'),
             ],
+            'entry_value' => [
+                'nullable',
+                'numeric',
+                'min:0',
+                Rule::requiredIf($this->payment_type === 'installment'),
+            ],
+            'first_due_date' => [
+                'nullable',
+                'date',
+                Rule::requiredIf($this->payment_type === 'installment'),
+            ],
         ];
     }
 
