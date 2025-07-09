@@ -26,6 +26,7 @@ const props = defineProps({
 
 const showSaleModal = ref(false)
 const search = ref(props.sales.meta?.search || '')
+const searchDate = ref('')
 const selectedPerPage = ref(props.perPage)
 
 const applySearch = debounce((value) => {
@@ -57,15 +58,43 @@ watch(search, (value) => applySearch(value))
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
                     <div class="p-5">
-                        <div class="mb-4 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-                            <input
-                                v-model="search"
-                                type="text"
-                                placeholder="Buscar por nome ou CPF"
-                                class="w-full md:w-1/3 rounded border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:ring focus:ring-indigo-300 text-sm px-3 py-2"
-                            />
+                        <div class="mb-4 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+                            <!-- Campo de busca e data -->
+                            <div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+                                <!-- Buscar por nome ou CPF -->
+                                <div class="flex flex-col w-full sm:w-80 md:w-96">
+                                    <label for="search" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        Buscar por Nome ou CPF
+                                    </label>
+                                    <input
+                                        id="search"
+                                        v-model="search"
+                                        type="text"
+                                        placeholder="Digite o nome ou CPF"
+                                        class="w-full rounded border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:ring focus:ring-indigo-300 text-sm px-4 py-2"
+                                    />
+                                </div>
 
-                            <PrimaryButton @click="showSaleModal = true" type="button">Nova Venda</PrimaryButton>
+                                <!-- Data da venda -->
+                                <div class="flex flex-col w-full sm:w-44">
+                                    <label for="searchDate" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        Data da Venda
+                                    </label>
+                                    <input
+                                        id="searchDate"
+                                        v-model="searchDate"
+                                        type="date"
+                                        class="w-full rounded border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:ring focus:ring-indigo-300 text-sm px-4 py-2"
+                                    />
+                                </div>
+                            </div>
+
+                            <!-- Botão -->
+                            <div>
+                                <PrimaryButton @click="showSaleModal = true" type="button">
+                                    Nova Venda
+                                </PrimaryButton>
+                            </div>
                         </div>
                         <div class="overflow-x-auto border border-gray-200 dark:border-gray-700 rounded shadow bg-white dark:bg-gray-800">
                             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
