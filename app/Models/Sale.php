@@ -17,10 +17,13 @@ class Sale extends Model
         'sold_at',
         'payment_type',
         'installments_count',
+        'entry_value',
+        'first_due_date'
     ];
 
     protected $casts = [
         'sold_at' => 'date',
+        'first_due_date' => 'date',
         'installments_count' => 'integer',
     ];
 

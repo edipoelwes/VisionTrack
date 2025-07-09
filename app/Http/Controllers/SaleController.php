@@ -59,23 +59,24 @@ class SaleController extends Controller
                 'sold_at' => $validated['sold_at'],
                 'payment_type' => $validated['payment_type'],
                 'installments_count' => $validated['installments_count'] ?? null,
+                'entry_value' => $validated['entry_value'] ?? 0,
+                'first_due_date' => $validated['first_due_date'] ?? null,
             ]);
 
-            // Se for parcelado, cria as parcelas
             if ($validated['payment_type'] === 'installment') {
+                $entryValue = $validated['entry_value'] ?? 0;
+                $installmentsCount = $validated['installments_count'];
+                $parcelValue = round(($validated['total'] - $entryValue) / $installmentsCount, 2);
+                $firstDueDate = Carbon::parse($validated['first_due_date']);
+
                 $installments = [];
 
-                $count = $validated['installments_count'];
-                $amount = round($validated['total'] / $count, 2);
-
-                $dueDate = Carbon::parse($validated['sold_at']);
-
-                for ($i = 1; $i <= $count; $i++) {
+                for ($i = 1; $i <= $installmentsCount; $i++) {
                     $installments[] = [
                         'sale_id' => $sale->id,
                         'number' => $i,
-                        'amount' => $amount,
-                        'due_date' => $dueDate->copy()->addMonths($i - 1),
+                        'amount' => $parcelValue,
+                        'due_date' => $firstDueDate->copy()->addMonths($i - 1),
                         'created_at' => now(),
                         'updated_at' => now(),
                     ];
