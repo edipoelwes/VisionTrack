@@ -11,7 +11,7 @@ class ClientPrescriptionStoreController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request, Client $client)
+    public function __invoke(Request $request, Client $client): \Illuminate\Http\RedirectResponse
     {
         $validated = $request->validate([
             'prescription.file' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',

@@ -15,16 +15,16 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             CompanySeeder::class,
-            ClientSeeder::class,
-            PrescriptionSeeder::class,
-            AddressSeeder::class,
-            SaleSeeder::class
+//            ClientSeeder::class,
+//            PrescriptionSeeder::class,
+//            AddressSeeder::class,
+//            SaleSeeder::class
         ]);
 
-        User::factory(1)->create([
-            'name' => 'Edipo Elwes',
-            'email' => 'edipoelwes2@gmail.com',
-            'company_id' => 1,
-        ]);
+//        User::factory(1)->create([
+//            'name' => 'Edipo Elwes',
+//            'email' => 'edipoelwes2@gmail.com',
+//            'company_id' => 1,
+//        ]);
     }
 }

@@ -15,12 +15,7 @@ class CompanySeeder extends Seeder
     {
         Company::query()->create([
             'name' => 'Fotoótica Macêdo',
-            'cnpj' => '12.345.678/0001-90',
-        ]);
-
-        Company::query()->create([
-            'name' => 'Ótica Silvia',
-            'cnpj' => '98.765.432/0001-10',
+            'cnpj' => '00.000.000/0000-00',
         ]);
     }
 }

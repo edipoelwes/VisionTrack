@@ -18,6 +18,6 @@ class PrescriptionController extends Controller
 
         $prescription->delete();
 
-        return redirect()->back()->with('success', 'Prescription removed successfully.');
+        return redirect()->back()->banner('Prescription removed successfully.');
     }
 }

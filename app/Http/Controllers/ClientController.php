@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
+use Native\Laravel\Facades\Alert;
 
 class ClientController extends Controller
 {
@@ -73,7 +74,7 @@ class ClientController extends Controller
             }
         }
 
-        return redirect()->route('clients.index')->with('success', 'Cliente criado com sucesso.');
+        return redirect()->route('clients.index')->banner('Cliente criado com sucesso.');
     }
 
     /**
@@ -124,7 +125,7 @@ class ClientController extends Controller
             $client->addresses()->create($address);
         }
 
-        return redirect()->route('clients.index')->with('success', 'Cliente atualizado com sucesso!');
+        return redirect()->route('clients.index')->banner('Cliente atualizado com sucesso!');
     }
 
     /**
@@ -143,6 +144,6 @@ class ClientController extends Controller
 
         $client->delete();
 
-        return redirect()->route('clients.index')->with('success', 'Cliente deletado com sucesso.');
+        return redirect()->route('clients.index')->banner('Cliente deletado com sucesso.');
     }
 }
