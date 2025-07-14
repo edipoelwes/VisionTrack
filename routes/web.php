@@ -23,9 +23,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', \App\Http\Controllers\HomeController::class)->name('dashboard');
 
     Route::resource('/clients', ClientController::class);
     Route::post('/clients/{client}/prescriptions', ClientPrescriptionStoreController::class)
