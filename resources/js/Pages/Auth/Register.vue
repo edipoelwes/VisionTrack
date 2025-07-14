@@ -73,7 +73,7 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
-            <div class="mt-4">
+            <div class="mt-4" v-if="false">
                 <InputLabel for="company_id" value="Company" />
                 <SelectInput
                     id="company_id"
