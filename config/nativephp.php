@@ -154,6 +154,7 @@ return [
 
     'postbuild' => [
         // 'rm -rf public/build',
+        'php artisan native:db:seed'
     ],
 
     /**
