@@ -14,7 +14,7 @@ class CompanySeeder extends Seeder
     public function run(): void
     {
         Company::query()->create([
-            'name' => 'Fotoótica Macêdo',
+            'name' => 'Fotoóptica Macêdo',
             'cnpj' => '00.000.000/0000-00',
         ]);
     }
