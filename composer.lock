@@ -2739,16 +2739,16 @@
         },
         {
             "name": "nativephp/php-bin",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/NativePHP/php-bin.git",
-                "reference": "a888cffa82b5c24c578fa73e7895d2210c502563"
+                "reference": "96adcfcadc8b7d117a095140a695702cbaeca412"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/NativePHP/php-bin/zipball/a888cffa82b5c24c578fa73e7895d2210c502563",
-                "reference": "a888cffa82b5c24c578fa73e7895d2210c502563",
+                "url": "https://api.github.com/repos/NativePHP/php-bin/zipball/96adcfcadc8b7d117a095140a695702cbaeca412",
+                "reference": "96adcfcadc8b7d117a095140a695702cbaeca412",
                 "shasum": ""
             },
             "type": "library",
@@ -2778,7 +2778,7 @@
                 "php"
             ],
             "support": {
-                "source": "https://github.com/NativePHP/php-bin/tree/1.0.2"
+                "source": "https://github.com/NativePHP/php-bin/tree/1.0.3"
             },
             "funding": [
                 {
@@ -2790,7 +2790,7 @@
                     "type": "opencollective"
                 }
             ],
-            "time": "2025-05-23T13:32:30+00:00"
+            "time": "2025-07-16T08:42:59+00:00"
         },
         {
             "name": "nesbot/carbon",
