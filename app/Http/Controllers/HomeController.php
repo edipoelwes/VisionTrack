@@ -25,7 +25,9 @@ class HomeController extends Controller
             'overdue_installments' => Installment::query()->whereNull('paid_at')->where('due_date', '<', now())->count(),
 
             // Para gráfico de vendas por mês
-            'sales_per_month' => Sale::query()->selectRaw("strftime('%Y-%m', sold_at) as period, SUM(total) as total")
+            'sales_per_month' => Sale::query()
+//                ->selectRaw("strftime('%Y-%m', sold_at) as period, SUM(total) as total")
+                ->selectRaw("DATE_FORMAT(sold_at, '%Y-%m') as period, SUM(total) as total")
                 ->groupBy('period')
                 ->orderBy('period')
                 ->get(),
