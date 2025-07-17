@@ -13,36 +13,21 @@ NEW_COMMIT=$(git rev-parse HEAD)
 if [ "$OLD_COMMIT" = "$NEW_COMMIT" ]; then
     echo "📦 Nenhuma nova alteração no repositório. Encerrando..."
     exit 0
-else
-    echo "🔄 Novas alterações detectadas. Continuando com o deploy..."
 fi
 
-# --- PHP Dependencies ---
-if [ ! -d vendor ] || [ composer.lock -nt vendor ]; then
-    echo "📦 Alterações detectadas no Composer. Instalando dependências..."
-    composer install --no-dev --optimize-autoloader
-else
-    echo "📦 Nenhuma alteração nas dependências PHP detectada."
-fi
+echo "🔄 Novas alterações detectadas. Iniciando processo..."
 
-# --- JS Dependencies ---
-INSTALL_DEPS=false
-if [ ! -d node_modules ] || [ package.json -nt node_modules ] || [ yarn.lock -nt node_modules ]; then
-    INSTALL_DEPS=true
-fi
+echo "📦 Instalando dependências PHP..."
+composer install --no-dev --optimize-autoloader || { echo "❌ Falha no composer install"; exit 1; }
 
-if $INSTALL_DEPS; then
-    echo "📦 Instalando dependências JS..."
-    yarn install --frozen-lockfile
-else
-    echo "📦 Dependências JS atualizadas. Ignorando instalação."
-fi
+echo "📦 Instalando dependências JS..."
+yarn install --frozen-lockfile || { echo "❌ Falha no yarn install"; exit 1; }
 
 echo "📦 Rodando build do front-end..."
-yarn build
+yarn build || { echo "❌ Falha no yarn build"; exit 1; }
 
 echo "🔁 Rodando migrations..."
-php artisan migrate --force
+php artisan migrate --force || { echo "❌ Falha nas migrations"; exit 1; }
 
 echo "🧹 Limpando e otimizando cache do Laravel..."
 php artisan config:clear
