@@ -2,6 +2,12 @@
 
 echo "🚀 Iniciando processo de deploy..."
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+echo "📥 Verificando yarn:"
+which yarn || { echo "❌ yarn não encontrado no PATH"; exit 1; }
+
 cd /var/www/vision-track || { echo "❌ Pasta do projeto não encontrada!"; exit 1; }
 
 echo "📥 Verificando atualizações no repositório Git..."
