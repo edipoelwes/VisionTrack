@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
+    //Teste deploy
     return redirect('/login');
 //    return Inertia::render('Welcome', [
 //        'canLogin' => Route::has('login'),
