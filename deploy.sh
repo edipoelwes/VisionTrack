@@ -30,18 +30,26 @@ else
     echo "📦 Nenhuma alteração nas dependências PHP detectada."
 fi
 
-# --- JS Dependencies ---
-if [ ! -d node_modules ] || [ package.json -nt node_modules ] || [ yarn.lock -nt node_modules ]; then
-    echo "📦 Alterações detectadas no Yarn. Instalando dependências e buildando front..."
+# --- JS Dependencies e Build ---
+NEED_BUILD=false
+
+if [ ! -d node_modules ]; then
+    NEED_BUILD=true
+elif git diff --name-only "$OLD_COMMIT" "$NEW_COMMIT" | grep -E '\.vue$|\.js$|\.ts$|vite\.config\.js'; then
+    NEED_BUILD=true
+fi
+
+if $NEED_BUILD; then
+    echo "📦 Alterações detectadas em arquivos front-end. Instalando dependências e buildando front..."
     yarn install --frozen-lockfile
     yarn build
 else
-    echo "📦 Nenhuma alteração nas dependências JS detectada."
+    echo "📦 Nenhuma alteração relevante no front-end detectada. Ignorando build."
 fi
 
-#echo "🔧 Ajustando permissões..."
-#sudo chown -R edipoelwes:edipoelwes storage bootstrap/cache
-#sudo chmod -R 775 storage bootstrap/cache
+# echo "🔧 Ajustando permissões..."
+# sudo chown -R edipoelwes:edipoelwes storage bootstrap/cache
+# sudo chmod -R 775 storage bootstrap/cache
 
 echo "🔁 Rodando migrations..."
 php artisan migrate --force
