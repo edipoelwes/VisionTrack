@@ -5,10 +5,10 @@ echo "🚀 Iniciando processo de deploy..."
 # Configura NVM para garantir que node/yarn estejam disponíveis
 export NVM_DIR="$HOME/.nvm"
 if [ -s "$NVM_DIR/nvm.sh" ]; then
-    \. "$NVM_DIR/nvm.sh"          # Carrega nvm
+    \. "$NVM_DIR/nvm.sh"
 fi
 if [ -s "$NVM_DIR/bash_completion" ]; then
-    \. "$NVM_DIR/bash_completion" # Opcional: carrega autocomplete do nvm
+    \. "$NVM_DIR/bash_completion"
 fi
 
 echo "📥 Verificando yarn:"
@@ -29,14 +29,29 @@ fi
 
 echo "🔄 Novas alterações detectadas. Iniciando processo..."
 
-echo "📦 Instalando dependências PHP..."
-composer install --no-dev --optimize-autoloader || { echo "❌ Falha no composer install"; exit 1; }
+# Composer install apenas se o composer.lock mudou
+if git diff --name-only "$OLD_COMMIT" "$NEW_COMMIT" | grep -q '^composer.lock$'; then
+    echo "📦 composer.lock alterado. Instalando dependências PHP..."
+    composer install --no-dev --optimize-autoloader || { echo "❌ Falha no composer install"; exit 1; }
+else
+    echo "📦 composer.lock não alterado. Pulando composer install."
+fi
 
-echo "📦 Instalando dependências JS..."
-yarn install --frozen-lockfile || { echo "❌ Falha no yarn install"; exit 1; }
+# Yarn install apenas se yarn.lock mudou
+if git diff --name-only "$OLD_COMMIT" "$NEW_COMMIT" | grep -q '^yarn.lock$'; then
+    echo "📦 yarn.lock alterado. Instalando dependências JS..."
+    yarn install --frozen-lockfile || { echo "❌ Falha no yarn install"; exit 1; }
+else
+    echo "📦 yarn.lock não alterado. Pulando yarn install."
+fi
 
-echo "📦 Rodando build do front-end..."
-yarn build || { echo "❌ Falha no yarn build"; exit 1; }
+# Rodar build apenas se arquivos do front forem alterados
+if git diff --name-only "$OLD_COMMIT" "$NEW_COMMIT" | grep -Eq '^resources/(js|css|sass)/|^vite\.config\.js$|^tailwind\.config\.js$|^package\.json$'; then
+    echo "📦 Alterações no front detectadas. Rodando build do front-end..."
+    yarn build || { echo "❌ Falha no yarn build"; exit 1; }
+else
+    echo "📦 Nenhuma alteração no front detectada. Pulando build do front-end."
+fi
 
 echo "🔁 Rodando migrations..."
 php artisan migrate --force || { echo "❌ Falha nas migrations"; exit 1; }
