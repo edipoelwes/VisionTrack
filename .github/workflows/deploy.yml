@@ -1,0 +1,26 @@
+name: 🚀 Deploy VisionTrack
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    name: Deploy via SSH
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Configurar chave SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H 162.243.117.103 >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Executar script remoto
+        run: |
+          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no edipoelwes@162.243.117.103 "bash /var/www/vision-track/deploy.sh"
