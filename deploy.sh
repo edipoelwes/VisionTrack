@@ -2,8 +2,14 @@
 
 echo "🚀 Iniciando processo de deploy..."
 
+# Configura NVM para garantir que node/yarn estejam disponíveis
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+    \. "$NVM_DIR/nvm.sh"          # Carrega nvm
+fi
+if [ -s "$NVM_DIR/bash_completion" ]; then
+    \. "$NVM_DIR/bash_completion" # Opcional: carrega autocomplete do nvm
+fi
 
 echo "📥 Verificando yarn:"
 which yarn || { echo "❌ yarn não encontrado no PATH"; exit 1; }
