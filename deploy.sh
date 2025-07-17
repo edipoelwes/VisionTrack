@@ -31,20 +31,29 @@ else
 fi
 
 # --- JS Dependencies e Build ---
-NEED_BUILD=false
+INSTALL_DEPS=false
+FRONT_CHANGED=false
 
 if [ ! -d node_modules ]; then
-    NEED_BUILD=true
-elif git diff --name-only "$OLD_COMMIT" "$NEW_COMMIT" | grep -E '\.vue$|\.js$|\.ts$|vite\.config\.js'; then
-    NEED_BUILD=true
+    INSTALL_DEPS=true
+elif [ package.json -nt node_modules ] || [ yarn.lock -nt node_modules ]; then
+    INSTALL_DEPS=true
 fi
 
-if $NEED_BUILD; then
-    echo "📦 Alterações detectadas em arquivos front-end. Instalando dependências e buildando front..."
+# Verifica se houve alteração nos arquivos front-end
+if git diff --name-only "$OLD_COMMIT" "$NEW_COMMIT" | grep -qE '\.vue$|\.js$|\.ts$|vite\.config\.js'; then
+    FRONT_CHANGED=true
+fi
+
+if $INSTALL_DEPS; then
+    echo "📦 Instalando dependências JS e buildando front-end..."
     yarn install --frozen-lockfile
     yarn build
+elif $FRONT_CHANGED; then
+    echo "📦 Apenas alterações no front-end. Rodando build..."
+    yarn build
 else
-    echo "📦 Nenhuma alteração relevante no front-end detectada. Ignorando build."
+    echo "📦 Nenhuma alteração relevante no front-end. Ignorando instalação e build."
 fi
 
 # echo "🔧 Ajustando permissões..."
