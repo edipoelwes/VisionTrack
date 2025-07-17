@@ -6,13 +6,8 @@ cd /var/www/vision-track || { echo "❌ Pasta do projeto não encontrada!"; exit
 
 echo "📥 Verificando atualizações no repositório Git..."
 
-# Salva o hash atual do último commit
 OLD_COMMIT=$(git rev-parse HEAD)
-
-# Puxa alterações
 git pull origin main || { echo "❌ Falha ao executar git pull"; exit 1; }
-
-# Salva novo hash e compara
 NEW_COMMIT=$(git rev-parse HEAD)
 
 if [ "$OLD_COMMIT" = "$NEW_COMMIT" ]; then
@@ -30,35 +25,21 @@ else
     echo "📦 Nenhuma alteração nas dependências PHP detectada."
 fi
 
-# --- JS Dependencies e Build ---
+# --- JS Dependencies ---
 INSTALL_DEPS=false
-FRONT_CHANGED=false
-
-if [ ! -d node_modules ]; then
+if [ ! -d node_modules ] || [ package.json -nt node_modules ] || [ yarn.lock -nt node_modules ]; then
     INSTALL_DEPS=true
-elif [ package.json -nt node_modules ] || [ yarn.lock -nt node_modules ]; then
-    INSTALL_DEPS=true
-fi
-
-# Verifica se houve alteração nos arquivos front-end
-if git diff --name-only "$OLD_COMMIT" "$NEW_COMMIT" | grep -qE '\.vue$|\.js$|\.ts$|vite\.config\.js'; then
-    FRONT_CHANGED=true
 fi
 
 if $INSTALL_DEPS; then
-    echo "📦 Instalando dependências JS e buildando front-end..."
+    echo "📦 Instalando dependências JS..."
     yarn install --frozen-lockfile
-    yarn build
-elif $FRONT_CHANGED; then
-    echo "📦 Apenas alterações no front-end. Rodando build..."
-    yarn build
 else
-    echo "📦 Nenhuma alteração relevante no front-end. Ignorando instalação e build."
+    echo "📦 Dependências JS atualizadas. Ignorando instalação."
 fi
 
-# echo "🔧 Ajustando permissões..."
-# sudo chown -R edipoelwes:edipoelwes storage bootstrap/cache
-# sudo chmod -R 775 storage bootstrap/cache
+echo "📦 Rodando build do front-end..."
+yarn build
 
 echo "🔁 Rodando migrations..."
 php artisan migrate --force
