@@ -19,6 +19,6 @@ class PayInstallmentController extends Controller
 
         $installment->update(['paid_at' => $validated['paid_at']]);
 
-        return back()->banner('Parcela marcada como paga.');
+        return back()->with('success', 'Parcela marcada como paga.');
     }
 }

@@ -92,7 +92,7 @@ class SaleController extends Controller
                 ->with('success', 'Venda registrada com sucesso.');
         } catch (Exception $e) {
             DB::rollBack();
-            return back()->banner('Erro ao registrar a venda: ' . $e->getMessage());
+            return back()->with('error', 'Erro ao registrar a venda: ' . $e->getMessage());
         }
     }
 
@@ -110,6 +110,6 @@ class SaleController extends Controller
     {
         $sale->delete();
 
-        return redirect()->back()->banner('Lançamento deletado com sucesso.');
+        return redirect()->back()->with('success', 'Lançamento deletado com sucesso.');
     }
 }
