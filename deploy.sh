@@ -32,7 +32,7 @@ echo "🔄 Novas alterações detectadas. Iniciando processo..."
 # Composer install apenas se o composer.lock mudou
 if git diff --name-only "$OLD_COMMIT" "$NEW_COMMIT" | grep -q '^composer.lock$'; then
     echo "📦 composer.lock alterado. Instalando dependências PHP..."
-    composer install --no-dev --optimize-autoloader || { echo "❌ Falha no composer install"; exit 1; }
+    composer update --no-dev --optimize-autoloader || { echo "❌ Falha no composer install"; exit 1; }
 else
     echo "📦 composer.lock não alterado. Pulando composer install."
 fi
