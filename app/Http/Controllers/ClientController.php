@@ -73,7 +73,7 @@ class ClientController extends Controller
             }
         }
 
-        return redirect()->route('clients.index');
+        return redirect()->route('clients.index')->with('success', 'Cliente criado com sucesso.');
     }
 
     /**
@@ -124,7 +124,7 @@ class ClientController extends Controller
             $client->addresses()->create($address);
         }
 
-        return redirect()->route('clients.index');
+        return redirect()->route('clients.index')->with('success', 'Cliente atualizado com sucesso.');
     }
 
     /**
@@ -143,6 +143,6 @@ class ClientController extends Controller
 
         $client->delete();
 
-        return redirect()->route('clients.index');
+        return redirect()->route('clients.index')->with('success', 'Cliente excluído com sucesso.');
     }
 }
