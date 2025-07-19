@@ -15,8 +15,7 @@
 
     .responsive-table th,
     .responsive-table td {
-        padding: 12px 16px;
-        border: 1px solid #ccc;
+        padding: 10px 14px;
         text-align: left;
     }
 
