@@ -108,10 +108,10 @@ watch(search, (value) => applySearch(value))
                                         <span class="ml-2 sm:hidden">Buscar</span>
                                     </button>
                                 </div>
-                                <PrimaryButton @click="showSaleModal = true" type="button">
-                                    Nova Venda
-                                </PrimaryButton>
                             </div>
+                            <PrimaryButton @click="showSaleModal = true" type="button">
+                                Nova Venda
+                            </PrimaryButton>
                         </div>
                         <div class="overflow-x-auto border border-gray-200 dark:border-gray-700 rounded shadow bg-white dark:bg-gray-800">
                             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 responsive-table">
