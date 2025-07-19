@@ -117,7 +117,7 @@ watch(search, (value) => applySearch(value))
                             </div>
                         </div>
                         <div class="overflow-x-auto border border-gray-200 dark:border-gray-700 rounded shadow bg-white dark:bg-gray-800">
-                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 responsive-table">
                                 <thead class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 uppercase text-xs">
                                 <tr>
                                     <th class="px-6 py-3 text-left">Cliente</th>
