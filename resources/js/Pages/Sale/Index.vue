@@ -84,9 +84,9 @@ watch(search, (value) => applySearch(value))
                                 </div>
 
                                 <!-- Data da venda -->
-                                <div class="flex items-end gap-2 w-full sm:w-auto">
+                                <div class="flex flex-col sm:flex-row items-end gap-2 w-full">
                                     <!-- Campo de data -->
-                                    <div class="flex flex-col">
+                                    <div class="flex flex-col w-full sm:w-auto">
                                         <label for="searchDate" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                             Data da Venda
                                         </label>
@@ -102,9 +102,10 @@ watch(search, (value) => applySearch(value))
                                     <button
                                         type="button"
                                         @click="applySearch"
-                                        class="h-10 w-10 inline-flex items-center justify-center rounded-md bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-700 dark:hover:bg-indigo-600 text-white"
+                                        class="h-10 w-full sm:w-10 inline-flex items-center justify-center rounded-md bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-700 dark:hover:bg-indigo-600 text-white mt-2 sm:mt-0"
                                     >
                                         <MagnifyingGlassIcon class="w-5 h-5" />
+                                        <span class="ml-2 sm:hidden">Buscar</span>
                                     </button>
                                 </div>
                             </div>
