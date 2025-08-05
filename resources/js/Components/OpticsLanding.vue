@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-gradient-to-b from-blue-50 to-white">
     <!-- Hero Section -->
-    <section class="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white">
+    <section id="home" class="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white">
       <div class="container mx-auto px-6 py-20">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
@@ -39,7 +39,7 @@
     </section>
 
     <!-- Services Section -->
-    <section class="py-20 bg-white">
+    <section id="services" class="py-20 bg-white">
       <div class="container mx-auto px-6">
         <div class="text-center mb-16">
           <h2 class="text-4xl font-bold text-gray-800 mb-4">Nossos Serviços</h2>
@@ -126,7 +126,7 @@
     </section>
 
     <!-- Features Section -->
-    <section class="py-20 bg-gray-50">
+    <section id="about" class="py-20 bg-gray-50">
       <div class="container mx-auto px-6">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
@@ -223,7 +223,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section class="py-20 bg-white">
+    <section id="contact" class="py-20 bg-white">
       <div class="container mx-auto px-6">
         <div class="text-center mb-16">
           <h2 class="text-4xl font-bold text-gray-800 mb-4">Entre em Contato</h2>
@@ -268,5 +268,16 @@
 </template>
 
 <script setup>
-// Este componente não necessita de props ou lógica adicional por enquanto
+// Função para scroll suave para as seções
+const scrollToSection = (sectionId) => {
+  const element = document.getElementById(sectionId);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+};
+
+// Expor a função para uso externo se necessário
+defineExpose({
+  scrollToSection
+});
 </script>
