@@ -38,7 +38,7 @@ class StoreClientRequest extends FormRequest
             'addresses.*.zip_code' => ['required', 'string'],
 
             'prescriptions' => ['nullable', 'array'],
-            'prescriptions.*.file' => ['required', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
+            'prescriptions.*.file' => ['required', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:10240'],
             'prescriptions.*.issued_at' => ['required', 'date'],
             'prescriptions.*.notes' => ['nullable', 'string'],
         ];
@@ -48,7 +48,7 @@ class StoreClientRequest extends FormRequest
     {
         return [
             'cpf.regex' => 'O CPF deve estar no formato 000.000.000-00.',
-            'prescriptions.*.file.max' => 'Cada arquivo deve ter no máximo 2MB.',
+            'prescriptions.*.file.max' => 'Cada arquivo deve ter no máximo 10MB.',
         ];
     }
 }
